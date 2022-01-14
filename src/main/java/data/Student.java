@@ -122,7 +122,7 @@ public class Student implements Serializable  //实现序列化接口
     }
 
     @Override
-    public int hashCode()     //序列化的序列码
+    public int hashCode()     //序列化和反序列化的序列码
     {
         int result = (int) (no ^ (no >>> 32));
         result = 31 * result + name.hashCode();

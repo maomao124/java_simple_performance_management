@@ -31,8 +31,15 @@ public class u_test
         student1.getMap().put("英语", 88.5f);
         System.out.println(student1);
 
+        Student student2 = new Student(18, "王五");
+        student2.getMap().put("语文", 78.0f);
+        student2.getMap().put("数学", 72.0f);
+        student2.getMap().put("英语", 59.5f);
+        System.out.println(student2);
+
         data.student_arraylist.getList().add(student);
         data.student_arraylist.getList().add(student1);
+        data.student_arraylist.getList().add(student2);
 
         System.out.println(data.student_arraylist.getList().size());
 
