@@ -46,8 +46,8 @@ public interface Function_interface
     //删除一名学生的所有成绩
     public boolean removeAllStudentScore(long no);
 
-    //查看一名学生的平均分
-    public void AverageScore(long no);
+    //获得一名学生的平均分
+    public float AverageScore(long no);
 
     //查看某门科目的成绩，并且按升序或者降序排列
     public void subject_score(String subject, String asc_or_desc);

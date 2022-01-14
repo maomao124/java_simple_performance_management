@@ -213,16 +213,53 @@ public class Function implements Function_interface
         return false;
     }
 
+    /**
+     * 删除一名学生的所有成绩
+     *
+     * @param no 学号
+     * @return boolean
+     */
     @Override
     public boolean removeAllStudentScore(long no)
     {
+        for (int i = 0; i < student_arraylist.getList().size(); i++)
+        {
+            data.Student student = data.student_arraylist.getList().get(i);
+            if (student.getNo() == no)            //找到相等的学号
+            {
+                student.getMap().clear();       //清空成绩
+            }
+        }
+        //没找到该学号
         return false;
     }
 
+    /**
+     * 获得一名学生的平均分
+     *
+     * @param no 学号
+     * @return float类型 值为-1则表示计算失败，原因为传入的学号不存在
+     */
     @Override
-    public void AverageScore(long no)
+    public float AverageScore(long no)
     {
-
+        float result = -1.0f;
+        for (int i = 0; i < student_arraylist.getList().size(); i++)
+        {
+            data.Student student = data.student_arraylist.getList().get(i);
+            if (student.getNo() == no)            //找到相等的学号
+            {
+                float sum = 0.0f;
+                for (String subject : student.getMap().keySet())
+                {
+                    sum = sum + student.getMap().get(subject);
+                }
+                result = sum / student.getMap().size();
+                return result;
+            }
+        }
+        //没找到该学号 返回-1
+        return result;
     }
 
     @Override
