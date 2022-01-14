@@ -183,9 +183,33 @@ public class Function implements Function_interface
         return false;
     }
 
+    /**
+     * 删除一名学生的一门科目的成绩
+     *
+     * @param no      学号
+     * @param subject 科目
+     * @return boolean
+     */
     @Override
     public boolean removeStudentScore(long no, String subject)
     {
+        for (int i = 0; i < student_arraylist.getList().size(); i++)
+        {
+            data.Student student = data.student_arraylist.getList().get(i);
+            if (student.getNo() == no)            //找到相等的学号
+            {
+                if (student.getMap().containsKey(subject))      //集合存在对应的科目，可以删除
+                {
+                    student.getMap().remove(subject);
+                    return true;
+                }
+                else            //不存在对应的科目，无法删除
+                {
+                    return false;
+                }
+            }
+        }
+        //没找到该学号
         return false;
     }
 
