@@ -152,9 +152,34 @@ public class Function implements Function_interface
         return false;
     }
 
+    /**
+     * 修改一名学生的成绩信息
+     *
+     * @param no      学号
+     * @param subject 科目
+     * @param score   分数
+     * @return boolean
+     */
     @Override
     public boolean updateStudentScore(long no, String subject, float score)
     {
+        for (int i = 0; i < student_arraylist.getList().size(); i++)
+        {
+            data.Student student = data.student_arraylist.getList().get(i);
+            if (student.getNo() == no)            //找到相等的学号
+            {
+                if (student.getMap().containsKey(subject))      //集合存在对应的科目，可以修改
+                {
+                    student.getMap().put(subject, score);
+                    return true;
+                }
+                else            //不存在对应的科目，无法修改
+                {
+                    return false;
+                }
+            }
+        }
+        //没找到该学号
         return false;
     }
 
