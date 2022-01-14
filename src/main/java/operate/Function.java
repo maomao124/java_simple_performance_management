@@ -272,6 +272,7 @@ public class Function implements Function_interface
     @Override
     public void subject_score(String subject, String asc_or_desc)
     {
+        String str = null;
         ArrayList<Student> list = new ArrayList<>();
         //键为学生对象，值为分数
         for (int i = 0; i < student_arraylist.getList().size(); i++)
@@ -291,6 +292,7 @@ public class Function implements Function_interface
         //排序
         if (asc_or_desc.equals("asc") || asc_or_desc.equals("ASC"))       //升序
         {
+            str = "升序";
             /*
             list.sort((stu1, stu2) ->
             {
@@ -328,8 +330,9 @@ public class Function implements Function_interface
                 }
             });
         }
-        else if (asc_or_desc.equals("desc") || asc_or_desc.equals("DESC"))       //升序
+        else if (asc_or_desc.equals("desc") || asc_or_desc.equals("DESC"))       //降序
         {
+            str = "降序";
             list.sort((stu1, stu2) ->
             {
                 if (stu1.getMap().get(subject) > stu2.getMap().get(subject))
@@ -373,7 +376,7 @@ public class Function implements Function_interface
             System.out.println("排序方式只能为升序或者降序");
         }
         //开始遍历
-        System.out.println("科目：");
+        System.out.println("科目：" + subject + "    排序方式：" + str);
         for (Student student : list)
         {
             System.out.println(student.getNo() + "\t\t" + student.getName() + "\t\t" + student.getMap().get(subject));

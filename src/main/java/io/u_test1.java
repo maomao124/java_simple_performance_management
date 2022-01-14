@@ -1,5 +1,8 @@
 package io;
 
+
+import operate.Function;
+
 /**
  * Project name(项目名称)：java实现简单的成绩管理
  * Package(包名): io
@@ -23,5 +26,7 @@ public class u_test1
         {
             System.out.println(student);
         }
+        Function function=new Function();
+        function.subject_score("语文","desc");
     }
 }
