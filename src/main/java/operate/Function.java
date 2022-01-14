@@ -4,6 +4,7 @@ import data.Student;
 import data.student_arraylist;
 
 import java.awt.*;
+import java.util.*;
 
 /**
  * Project name(项目名称)：java实现简单的成绩管理
@@ -262,9 +263,120 @@ public class Function implements Function_interface
         return result;
     }
 
+    /**
+     * 查看某门科目的成绩，并且按升序或者降序排列，输出有三列，学号，姓名，分数
+     *
+     * @param subject     科目
+     * @param asc_or_desc 升序或者降序
+     */
     @Override
     public void subject_score(String subject, String asc_or_desc)
     {
-
+        ArrayList<Student> list = new ArrayList<>();
+        //键为学生对象，值为分数
+        for (int i = 0; i < student_arraylist.getList().size(); i++)
+        {
+            data.Student student = data.student_arraylist.getList().get(i);
+            if (student.getMap().containsKey(subject))      //集合存在对应的科目
+            {
+                list.add(student);
+            }
+        }
+        if (list.size() == 0)     //空
+        {
+            Toolkit.getDefaultToolkit().beep();
+            System.out.println("科目" + subject + "无对应的数据");
+            return;
+        }
+        //排序
+        if (asc_or_desc.equals("asc") || asc_or_desc.equals("ASC"))       //升序
+        {
+            /*
+            list.sort((stu1, stu2) ->
+            {
+                if (stu1.getMap().get(subject) > stu2.getMap().get(subject))
+                {
+                    return 1;
+                }
+                else if (stu1.getMap().get(subject) < stu2.getMap().get(subject))
+                {
+                    return -1;
+                }
+                else
+                {
+                    return 0;
+                }
+            });
+             */
+            list.sort(new Comparator<>()
+            {
+                @Override
+                public int compare(Student stu1, Student stu2)
+                {
+                    if (stu1.getMap().get(subject) > stu2.getMap().get(subject))
+                    {
+                        return 1;
+                    }
+                    else if (stu1.getMap().get(subject) < stu2.getMap().get(subject))
+                    {
+                        return -1;
+                    }
+                    else
+                    {
+                        return 0;
+                    }
+                }
+            });
+        }
+        else if (asc_or_desc.equals("desc") || asc_or_desc.equals("DESC"))       //升序
+        {
+            list.sort((stu1, stu2) ->
+            {
+                if (stu1.getMap().get(subject) > stu2.getMap().get(subject))
+                {
+                    return -1;
+                }
+                else if (stu1.getMap().get(subject) < stu2.getMap().get(subject))
+                {
+                    return 1;
+                }
+                else
+                {
+                    return 0;
+                }
+            });
+            /*
+            list.sort(new Comparator<Student>()
+            {
+                @Override
+                public int compare(Student stu1, Student stu2)
+                {
+                    if (stu1.getMap().get(subject) > stu2.getMap().get(subject))
+                    {
+                        return -1;
+                    }
+                    else if (stu1.getMap().get(subject) < stu2.getMap().get(subject))
+                    {
+                        return 1;
+                    }
+                    else
+                    {
+                        return 0;
+                    }
+                }
+            });
+             */
+        }
+        else
+        {
+            Toolkit.getDefaultToolkit().beep();
+            System.out.println("排序方式只能为升序或者降序");
+        }
+        //开始遍历
+        System.out.println("科目：");
+        for (Student student : list)
+        {
+            System.out.println(student.getNo() + "\t\t" + student.getName() + "\t\t" + student.getMap().get(subject));
+        }
     }
 }
