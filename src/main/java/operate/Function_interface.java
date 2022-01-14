@@ -37,7 +37,6 @@ public interface Function_interface
     //添加一名学生的成绩信息，如果键已经存在，则更新成绩
     public boolean addStudentScore(long no, String subject, float score);
 
-
     //修改一名学生的成绩信息
     public boolean updateStudentScore(long no, String subject, float score);
 
