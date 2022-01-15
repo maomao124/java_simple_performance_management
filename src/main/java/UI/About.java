@@ -22,7 +22,7 @@ public class About extends JFrame
 {
     public static ImageIcon createImageIcon(String path)
     {
-        URL imgURL = MainPanel.class.getResource(path);
+        URL imgURL = About.class.getResource(path);
         if (imgURL != null)
         {
             return new ImageIcon(imgURL);
