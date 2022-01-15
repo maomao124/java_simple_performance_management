@@ -128,6 +128,12 @@ public class Function implements Function_interface
         }
     }
 
+    @Override
+    public String getStudentInformation()
+    {
+        return null;
+    }
+
     /**
      * 查找学生信息，按学号查找
      *
@@ -166,6 +172,12 @@ public class Function implements Function_interface
                 System.out.println(student);
             }
         }
+    }
+
+    @Override
+    public String getFindByName(String name)
+    {
+        return null;
     }
 
     /**
@@ -421,5 +433,11 @@ public class Function implements Function_interface
         {
             System.out.println(student.getNo() + "\t\t" + student.getName() + "\t\t" + student.getMap().get(subject));
         }
+    }
+
+    @Override
+    public void getSubject_score(String subject, String asc_or_desc)
+    {
+
     }
 }

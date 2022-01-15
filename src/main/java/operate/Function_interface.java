@@ -36,11 +36,17 @@ public interface Function_interface
     //查看学生的所有信息
     public void display();
 
+    //获得学生的所有信息，返回字符串，不在控制台上打印
+    public String getStudentInformation();
+
     //查找学生信息，按学号查找
     public Student findByNo(long no);
 
     //查找学生信息，按姓名查找
     public void findByName(String name);
+
+    //获得查找学生信息的结果，按姓名查找，返回字符串，不在控制台上打印
+    public String getFindByName(String name);
 
     //添加一名学生的成绩信息，如果键已经存在，则更新成绩
     public boolean addStudentScore(long no, String subject, float score);
@@ -59,4 +65,7 @@ public interface Function_interface
 
     //查看某门科目的成绩，并且按升序或者降序排列
     public void subject_score(String subject, String asc_or_desc);
+
+    //获得某门科目的成绩，并且按升序或者降序排列，返回字符串,不在控制台上打印
+    public void getSubject_score(String subject, String asc_or_desc);
 }
