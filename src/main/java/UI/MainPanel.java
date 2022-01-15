@@ -67,6 +67,7 @@ public class MainPanel
         jPanel_down.add(display);
         jPanel_up.add(addStudent);
         jPanel_up.add(deleteStudent);
+        jPanel_up.add(updateStudent);
 
         jPanel_main.add(jScrollPane, BorderLayout.CENTER);
         jPanel_main.add(jPanel_up, BorderLayout.NORTH);
@@ -119,6 +120,15 @@ public class MainPanel
                 MainPanel.this.delete();
             }
         });
+
+        updateStudent.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                MainPanel.this.update();
+            }
+        });
     }
 
     /**
@@ -129,17 +139,21 @@ public class MainPanel
         display = new JButton("刷新");
         addStudent = new JButton("添加");
         deleteStudent = new JButton("删除");
+        updateStudent = new JButton("更新");
 
         display.setBackground(Color.cyan);
         addStudent.setBackground(Color.cyan);
         deleteStudent.setBackground(Color.cyan);
+        updateStudent.setBackground(Color.cyan);
     }
 
+    /**
+     * 删除
+     */
     private void delete()
     {
         long no;
         String no_str = JOptionPane.showInputDialog(null, "请输入要删除的学号：");
-        System.out.println(no_str);
         if (no_str == null)
         {
             return;
@@ -167,18 +181,18 @@ public class MainPanel
             return;
         }
         data.Student student = function.findByNo(no);
-        if (student==null)
+        if (student == null)
         {
             Toolkit.getDefaultToolkit().beep();
             JOptionPane.showMessageDialog(null, "此学生不存在！", "提示", JOptionPane.ERROR_MESSAGE);
             return;
         }
         Toolkit.getDefaultToolkit().beep();
-        int result=JOptionPane.showConfirmDialog(null,
+        int result = JOptionPane.showConfirmDialog(null,
                 "学生信息为：\n" + student + "\n是否删除？", "提示", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
-        if (result==0)
+        if (result == 0)
         {
-            boolean result1=function.deleteStudent(no);
+            boolean result1 = function.deleteStudent(no);
             if (!result1)
             {
                 Toolkit.getDefaultToolkit().beep();
@@ -188,5 +202,48 @@ public class MainPanel
             MainPanel.jTextArea.setText(MainPanel.function.getStudentInformation());
             io.Student.write();
         }
+    }
+
+    /**
+     * 更新
+     */
+    private void update()
+    {
+        long no;
+        String no_str = JOptionPane.showInputDialog(null, "请输入要更新的旧学号：");
+        if (no_str == null)
+        {
+            return;
+        }
+        if (no_str.equals(""))
+        {
+            Toolkit.getDefaultToolkit().beep();
+            JOptionPane.showMessageDialog(null, "学号不能为空!", "提示", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        try
+        {
+            no = Long.parseLong(no_str);
+        }
+        catch (Exception e)
+        {
+            Toolkit.getDefaultToolkit().beep();
+            JOptionPane.showMessageDialog(null, "输入的学号不是long型！", "提示", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (no < 0)
+        {
+            Toolkit.getDefaultToolkit().beep();
+            JOptionPane.showMessageDialog(null, "输入的学号不是正数！", "提示", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        data.Student student = function.findByNo(no);
+        if (student == null)
+        {
+            Toolkit.getDefaultToolkit().beep();
+            JOptionPane.showMessageDialog(null, "此学生不存在！", "提示", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        new UpdateStudent(student);
     }
 }

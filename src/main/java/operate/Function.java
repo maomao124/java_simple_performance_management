@@ -94,7 +94,7 @@ public class Function implements Function_interface
         for (int i = 0; i < student_arraylist.getList().size(); i++)
         {
             data.Student student = data.student_arraylist.getList().get(i);
-            if (student.getNo() == no)            //找到相等的学号，不允许修改
+            if (student.getNo() == no && student.getNo() != old_no)            //找到相等的学号，不允许修改
             {
                 return false;
             }
