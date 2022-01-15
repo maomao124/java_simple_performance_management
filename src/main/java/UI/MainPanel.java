@@ -79,7 +79,6 @@ public class MainPanel
         JScrollPane jScrollPane = new JScrollPane(jTextArea);       //加入滚动面板
 
         this.initBottom();                              //初始化按钮
-        this.initListener();                            //初始化监听器
 
         fontSetting_object = new FontSetting(jTextArea);
         border_object = new Border(jTextArea, jScrollPane);
@@ -87,7 +86,7 @@ public class MainPanel
         about_object = new About();
 
         jMenuBar = new JMenuBar();
-        menu = new JMenu("操作");
+        menu = new JMenu("--菜单--");
 
         fontSetting = new JMenuItem("字体设置");
         borderSetting = new JMenuItem("边框设置");
@@ -99,7 +98,14 @@ public class MainPanel
         use.setBackground(Color.cyan);
         about.setBackground(Color.cyan);
 
+        menu.add(fontSetting);
+        menu.add(borderSetting);
+        menu.add(use);
+        menu.add(about);
 
+        jMenuBar.add(menu);
+
+        jFrame.setJMenuBar(jMenuBar);
 
         jPanel_down.add(display);
         jPanel_up1.add(addStudent);
@@ -123,6 +129,8 @@ public class MainPanel
         jPanel_main.add(jPanel_up, BorderLayout.NORTH);
         jPanel_main.add(jPanel_down, BorderLayout.SOUTH);
         jFrame.add(jPanel_main);
+
+        this.initListener();                            //初始化监听器
 
         jFrame.setVisible(true);
 
@@ -258,6 +266,42 @@ public class MainPanel
             public void actionPerformed(ActionEvent e)
             {
                 new Subject_score();
+            }
+        });
+
+        fontSetting.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                fontSetting_object.setVisible(true);
+            }
+        });
+
+        borderSetting.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                border_object.setVisible(true);
+            }
+        });
+
+        use.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                instructionsForUse_object.setVisible(true);
+            }
+        });
+
+        about.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                about_object.setVisible(true);
             }
         });
     }

@@ -1,0 +1,16 @@
+日期：2022/01/15    时间：20:23:44        主机：mao        错误堆栈：
+java.lang.NullPointerException: Cannot invoke "javax.swing.JMenuItem.addActionListener(java.awt.event.ActionListener)" because "this.fontSetting" is null
+	at UI.MainPanel.initListener(MainPanel.java:271)
+	at UI.MainPanel.<init>(MainPanel.java:82)
+	at Run.main(Run.java:29)
+
+
+
+日期：2022/01/15    时间：20:25:24        主机：mao        错误堆栈：
+java.lang.NullPointerException: Cannot invoke "javax.swing.JMenuItem.addActionListener(java.awt.event.ActionListener)" because "this.fontSetting" is null
+	at UI.MainPanel.initListener(MainPanel.java:271)
+	at UI.MainPanel.<init>(MainPanel.java:82)
+	at Run.main(Run.java:29)
+
+
+

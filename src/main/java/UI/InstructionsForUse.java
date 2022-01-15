@@ -21,7 +21,16 @@ public class InstructionsForUse extends JFrame
     public InstructionsForUse()
     {
         this.setTitle("使用说明");
-        this.setSize(950, 550);
+        int w = 950;
+        int h = 550;
+        int x = MainPanel.jFrame.getX();
+        int y = MainPanel.jFrame.getY();
+        this.setSize(w, h);
+        int width = MainPanel.jFrame.getWidth();
+        int height = MainPanel.jFrame.getHeight();
+        int Location_x = x + width / 2 - w / 2;
+        int Location_y = y + height / 2 - h / 2;
+        this.setLocation(Location_x, Location_y);
         JPanel jPanel = new JPanel();
         JTextArea jTextArea = new JTextArea();
         jTextArea.setEditable(false);
@@ -30,7 +39,7 @@ public class InstructionsForUse extends JFrame
         // TODO: 2022/1/15 完成使用说明
         String str = """
                 使用说明：
-                
+                                
                 """;
 
         Font font = new Font("宋体", Font.BOLD, 18);
