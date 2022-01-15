@@ -33,6 +33,7 @@ public class MainPanel
     private JButton display;
     private JButton findByNo;
     private JButton findByName;
+    private JButton globalFind;
     private JButton addStudentScore;
     private JButton updateStudentScore;
     private JButton removeStudentScore;
@@ -70,6 +71,7 @@ public class MainPanel
         jPanel_up.add(updateStudent);
         jPanel_up.add(findByNo);
         jPanel_up.add(findByName);
+        jPanel_up.add(globalFind);
 
         jPanel_main.add(jScrollPane, BorderLayout.CENTER);
         jPanel_main.add(jPanel_up, BorderLayout.NORTH);
@@ -149,6 +151,15 @@ public class MainPanel
                 MainPanel.this.findByName();
             }
         });
+
+        globalFind.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                new Search();
+            }
+        });
     }
 
     /**
@@ -162,6 +173,7 @@ public class MainPanel
         updateStudent = new JButton("更新");
         findByNo = new JButton("按学号查找");
         findByName = new JButton("按姓名查找");
+        globalFind = new JButton("全局查找");
 
         display.setBackground(Color.cyan);
         addStudent.setBackground(Color.cyan);
@@ -169,6 +181,7 @@ public class MainPanel
         updateStudent.setBackground(Color.cyan);
         findByNo.setBackground(Color.cyan);
         findByName.setBackground(Color.cyan);
+        globalFind.setBackground(Color.cyan);
     }
 
     /**
@@ -328,8 +341,8 @@ public class MainPanel
             JOptionPane.showMessageDialog(null, "姓名不能为空!", "提示", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        String result=function.getFindByName(name_str);
-        if (result==null)
+        String result = function.getFindByName(name_str);
+        if (result == null)
         {
             Toolkit.getDefaultToolkit().beep();
             JOptionPane.showMessageDialog(null, "查找结果为空!", "提示", JOptionPane.INFORMATION_MESSAGE);
