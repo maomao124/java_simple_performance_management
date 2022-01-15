@@ -1,0 +1,2428 @@
+H:\����\��������\javaʵ�ּ򵥵ĳɼ�����\\src\\main\\java\\data\\Student.java
+package data;
+
+import java.io.Serializable;
+import java.util.HashMap;
+
+/**
+ * Project name(项目名称)：java实现简单的成绩管理
+ * Package(包名): PACKAGE_NAME
+ * Class(类名): data.Student
+ * Author(作者）: mao
+ * Author QQ：1296193245
+ * GitHub：https://github.com/maomao124/
+ * Date(创建日期)： 2022/1/14
+ * Time(创建时间)： 21:18
+ * Version(版本): 1.0
+ * Description(描述)： 学生的数据类
+ */
+
+public class Student implements Serializable  //实现序列化接口
+{
+    private long no;            //学号，主键，不能重复，不能为负数
+    private String name;        //名字
+    private HashMap<String, Float> map;  //map集合，典型的的一对多关系，一个学生有多个成绩
+    //键为具体科目的名称，值为分数，分数不能为负数，最高分未知，这里不加限制
+    //Map接口的基于哈希表的实现。 此实现提供了所有可选的映射操作，并允许null值和null键。
+    // （ HashMap类大致相当于Hashtable ，除了它是不同步的并且允许空值。）这个类不保证映射的顺序；
+    // 特别是，它不保证订单会随着时间的推移保持不变。
+    //此实现为基本操作（ get和put ）提供恒定时间性能，假设散列函数在桶中正确分散元素。
+    // 迭代集合视图需要的时间与HashMap实例的“容量”（桶的数量）加上它的大小（键值映射的数量）成正比。
+    // 因此，如果迭代性能很重要，则不要将初始容量设置得太高（或负载因子太低），这一点非常重要。
+    //HashMap的实例有两个影响其性能的参数：初始容量和负载因子。 容量是哈希表中的桶数，初始容量就是哈希表创建时的容量。
+    // 负载因子是衡量哈希表在其容量自动增加之前允许达到多满的指标。
+    // 当哈希表中的条目数超过负载因子和当前容量的乘积时，重新哈希表（即重建内部数据结构），使哈希表具有大约两倍的桶数。
+
+
+    //构造函数
+    public Student()
+    {
+        map = new HashMap<>();
+    }
+
+    public Student(long no, String name)
+    {
+        if (no >= 0)
+        {
+            this.no = no;
+        }
+        else
+        {
+            this.no = 0;
+        }
+        this.name = name;
+        map = new HashMap<>();
+    }
+
+    //getter和setter方法
+    public long getNo()
+    {
+        return no;
+    }
+
+    public void setNo(long no)
+    {
+        if (no >= 0)
+        {
+            this.no = no;
+        }
+        else
+        {
+            this.no = 0;
+        }
+    }
+
+    public String getName()
+    {
+        return name;
+    }
+
+    public void setName(String name)
+    {
+        this.name = name;
+    }
+
+    public HashMap<String, Float> getMap()
+    {
+        return map;
+    }
+
+    public void setMap(HashMap<String, Float> map)
+    {
+        this.map = map;
+    }
+
+    @Override
+    public boolean equals(Object o)
+    {
+        if (this == o)    //引用同一个对象
+        {
+            return true;
+        }
+        if (o == null)    //检测obj是否为null
+        {
+            return false;
+        }
+        //if(!(otherObject instanceof ClassName)) //如果所有的子类都拥有统一的语义
+        if (this.getClass() != o.getClass())   //比较this与obj是否属于同一个类
+        {
+            return false;
+        }
+        //Object类向下转型
+        Student student = (Student) o;
+
+        if (no != student.no)
+        {
+            return false;
+        }
+        if (!name.equals(student.name))
+        {
+            return false;
+        }
+        return map.equals(student.map);
+    }
+
+    @Override
+    public int hashCode()     //序列化和反序列化的序列码
+    {
+        int result = (int) (no ^ (no >>> 32));
+        result = 31 * result + name.hashCode();
+        result = 31 * result + map.hashCode();
+        return result;
+    }
+
+    @Override
+    @SuppressWarnings("all")
+    public String toString()
+    {
+        final StringBuilder stringbuilder = new StringBuilder();
+        stringbuilder.append("学号：").append(no).append("      ");
+        stringbuilder.append("姓名：").append(name).append('\n');
+        stringbuilder.append("分数：").append(map).append('\n');
+        return stringbuilder.toString();
+    }
+}
+�
+H:\����\��������\javaʵ�ּ򵥵ĳɼ�����\\src\\main\\java\\data\\student_arraylist.java
+package data;
+
+import java.util.ArrayList;
+
+/**
+ * Project name(项目名称)：java实现简单的成绩管理
+ * Package(包名): data
+ * Class(类名): student_arraylist
+ * Author(作者）: mao
+ * Author QQ：1296193245
+ * GitHub：https://github.com/maomao124/
+ * Date(创建日期)： 2022/1/14
+ * Time(创建时间)： 21:31
+ * Version(版本): 1.0
+ * Description(描述)： 此类存放学生数组
+ */
+
+public class student_arraylist
+{
+    private static ArrayList<Student> list = new ArrayList<>(); //确保不为空指针异常
+    //List接口的可调整大小的数组实现。 实现所有可选的列表操作，并允许所有元素，包括null 。
+
+    public static ArrayList<Student> getList()
+    {
+        return list;
+    }
+
+    public static void setList(ArrayList<Student> list)
+    {
+        student_arraylist.list = list;
+    }
+}
+�
+H:\����\��������\javaʵ�ּ򵥵ĳɼ�����\\src\\main\\java\\io\\ErrorLog.java
+package io;
+
+import javax.swing.*;
+import java.awt.*;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
+import java.text.DecimalFormat;
+import java.util.Calendar;
+
+/**
+ * Project name(项目名称)：java实现简单的成绩管理
+ * Package(包名): io
+ * Class(类名): ErrorLog
+ * Author(作者）: mao
+ * Author QQ：1296193245
+ * GitHub：https://github.com/maomao124/
+ * Date(创建日期)： 2022/1/15
+ * Time(创建时间)： 13:21
+ * Version(版本): 1.0
+ * Description(描述)： 无
+ */
+
+public class ErrorLog
+{
+    private static final String path = "error.log";  //错误日志路径
+
+    /**
+     * 把错误的堆栈字符串写入文件
+     *
+     * @param message 堆栈字符串
+     */
+    public static void write(String message)
+    {
+        Calendar calendar = Calendar.getInstance();// 获取当前时间
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        month = month + 1;                         //月份从 0 开始，所以加 1
+        int day = calendar.get(Calendar.DATE);
+        int week = calendar.get(Calendar.DAY_OF_WEEK);
+        week = week - 1;                             //星期日为第一天
+        int hour = calendar.get(Calendar.HOUR_OF_DAY); //时
+        int minute = calendar.get(Calendar.MINUTE);   //分
+        int second = calendar.get(Calendar.SECOND);   //秒
+        int millisecond = calendar.get(Calendar.MILLISECOND); //毫秒
+        int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH); // 获取今天是本月第几天
+        int dayOfWeekInMonth = calendar.get(Calendar.DAY_OF_WEEK_IN_MONTH); // 获取今天是本月第几周
+        int many = calendar.get(Calendar.DAY_OF_YEAR); // 获取今天是今年第几天
+        StringBuilder stringBuffer1 = new StringBuilder();
+        DecimalFormat decimalFormat1 = new DecimalFormat("00");
+        //stringBuffer1.append(year).append("年 ").append(month).append("月 ").append(day).append("日 ")
+        // .append(hour).append("时 ").append(minute).append("分 ").append(second).append("秒");
+        stringBuffer1.append("日期：");
+        stringBuffer1.append(decimalFormat1.format(year)).append("/").append(decimalFormat1.format(month)).append("/")
+                .append(decimalFormat1.format(day)).append("    时间：").append(decimalFormat1.format(hour))
+                .append(":").append(decimalFormat1.format(minute)).append(":").append(decimalFormat1.format(second));
+        //System.out.println(stringBuffer1);
+        stringBuffer1.append("        主机：").append(System.getProperty("user.name"));
+        stringBuffer1.append("        错误堆栈：\n");
+        stringBuffer1.append(message);
+        stringBuffer1.append("\n\n\n");
+
+        //写入
+        FileOutputStream fileOutputStream = null;
+        try                                  //文件流打开，文件读写
+        {
+            fileOutputStream = new FileOutputStream(path, true);
+            fileOutputStream.write(stringBuffer1.toString().getBytes(StandardCharsets.UTF_8));
+        }
+        catch (FileNotFoundException e)      //文件未找到
+        {
+            Toolkit.getDefaultToolkit().beep();
+            System.err.println("文件未找到！！！  " + "\n错误内容：" + e.toString());
+        }
+        catch (Exception e)                  //其它异常
+        {
+            Toolkit.getDefaultToolkit().beep();
+            e.printStackTrace();
+        }
+        finally
+        {
+            try                              //关闭流
+            {
+                if (fileOutputStream != null)
+                {
+                    fileOutputStream.close();
+                }
+            }
+            catch (NullPointerException e)    //空指针异常
+            {
+                Toolkit.getDefaultToolkit().beep();
+                System.err.println("文件已经被关闭，无法再次关闭！！！");
+            }
+            catch (Exception e)              //其它异常
+            {
+                Toolkit.getDefaultToolkit().beep();
+                e.printStackTrace();
+            }
+        }
+    }
+
+    /**
+     * 从错误日志里读错误日志
+     *
+     * @return 字符串 错误日志
+     */
+    public static String read()
+    {
+        FileInputStream fileInputStream = null;
+        InputStreamReader InputStreamReader = null;
+        BufferedReader bufferedReader = null;
+        try                                  //文件流打开，文件读写
+        {
+            fileInputStream = new FileInputStream(path);
+            InputStreamReader = new InputStreamReader(fileInputStream, StandardCharsets.UTF_8);
+            bufferedReader = new BufferedReader(InputStreamReader);
+            String str;
+            StringBuilder stringBuilder = new StringBuilder();
+            while ((str = bufferedReader.readLine()) != null)
+            {
+                stringBuilder.append(str).append("\n");
+            }
+            return stringBuilder.toString();
+        }
+        catch (FileNotFoundException e)      //文件未找到
+        {
+            Toolkit.getDefaultToolkit().beep();
+            System.err.println("文件未找到！！！  " + "\n错误内容：" + e.toString());
+            final Writer result = new StringWriter();
+            final PrintWriter printWriter = new PrintWriter(result);
+            e.printStackTrace(printWriter);
+            String stackTraceStr = result.toString();
+            ErrorLog.write(stackTraceStr);
+        }
+        catch (Exception e)                  //其它异常
+        {
+            Toolkit.getDefaultToolkit().beep();
+            e.printStackTrace();
+            final Writer result = new StringWriter();
+            final PrintWriter printWriter = new PrintWriter(result);
+            e.printStackTrace(printWriter);
+            String stackTraceStr = result.toString();
+            ErrorLog.write(stackTraceStr);
+        }
+        finally
+        {
+            try                              //关闭流
+            {
+                if (fileInputStream != null)
+                {
+                    fileInputStream.close();
+                }
+                if (InputStreamReader != null)
+                {
+                    InputStreamReader.close();
+                }
+                if (bufferedReader != null)
+                {
+                    bufferedReader.close();
+                }
+            }
+            catch (NullPointerException e)    //空指针异常
+            {
+                Toolkit.getDefaultToolkit().beep();
+                System.err.println("文件已经被关闭，无法再次关闭！！！");
+                final Writer result = new StringWriter();
+                final PrintWriter printWriter = new PrintWriter(result);
+                e.printStackTrace(printWriter);
+                String stackTraceStr = result.toString();
+                ErrorLog.write(stackTraceStr);
+            }
+            catch (Exception e)              //其它异常
+            {
+                Toolkit.getDefaultToolkit().beep();
+                e.printStackTrace();
+                final Writer result = new StringWriter();
+                final PrintWriter printWriter = new PrintWriter(result);
+                e.printStackTrace(printWriter);
+                String stackTraceStr = result.toString();
+                ErrorLog.write(stackTraceStr);
+            }
+        }
+        return null;
+    }
+}
+
+�
+H:\����\��������\javaʵ�ּ򵥵ĳɼ�����\\src\\main\\java\\io\\Student.java
+package io;
+
+import data.student_arraylist;
+
+import java.awt.*;
+import java.io.*;
+import java.util.ArrayList;
+
+/**
+ * Project name(项目名称)：java实现简单的成绩管理
+ * Package(包名): io
+ * Class(类名): Student
+ * Author(作者）: mao
+ * Author QQ：1296193245
+ * GitHub：https://github.com/maomao124/
+ * Date(创建日期)： 2022/1/14
+ * Time(创建时间)： 21:34
+ * Version(版本): 1.0
+ * Description(描述)： 学生的输入输出类
+ */
+
+public class Student
+{
+    private static final String path = "Student.dat";       //用于存放数据的文件路径
+
+    /**
+     * 把所有学生的信息写入到硬盘里
+     *
+     * @return boolean
+     */
+    public static boolean write()
+    {
+        boolean result = false;
+        FileOutputStream fileOutputStream = null;         //文件字节流,输出
+        //文件输出流是用于将数据写入File或FileDescriptor的输出流。 文件是否可用或可以创建取决于底层平台。
+        // 特别是某些平台，一次只允许一个FileOutputStream （或其他文件写入对象）打开一个文件进行写入。
+        ObjectOutputStream objectOutputStream = null;     //对象流，输出
+        //ObjectOutputStream 将 Java 对象的原始数据类型和图形写入 OutputStream。
+        // 可以使用 ObjectInputStream 读取（重构）对象。 对象的持久存储可以通过使用流的文件来实现。 如果流是网络套接字流，则可以在另一个主机或另一个进程中重构对象。
+        //只有支持 java.io.Serializable 接口的对象才能写入流。 每个可序列化对象的类都经过编码，
+        // 包括类的类名和签名、对象的字段和数组的值，以及从初始对象引用的任何其他对象的闭包。
+        //writeObject 方法用于将对象写入流。 任何对象，包括字符串和数组，都是用 writeObject 编写的。
+        // 可以将多个对象或原语写入流。 对象必须从相应的 ObjectInputstream 以与写入时相同的类型和相同的顺序读回。
+        //原始数据类型也可以使用 DataOutput 中的适当方法写入流。 也可以使用 writeUTF 方法写入字符串。
+
+        try                                  //文件流打开，文件读写
+        {
+            fileOutputStream = new FileOutputStream(path);              //创建管道
+            objectOutputStream = new ObjectOutputStream(fileOutputStream);
+            //写入文件
+            for (int i = 0; i < student_arraylist.getList().size(); i++)
+            {
+                data.Student student;
+                student = student_arraylist.getList().get(i);
+                objectOutputStream.writeObject(student);
+            }
+            result = true;
+        }
+        catch (FileNotFoundException e)      //文件未找到
+        {
+            Toolkit.getDefaultToolkit().beep();
+            System.err.println("文件未找到！！！  " + "\n错误内容：" + e.toString());
+        }
+        catch (Exception e)                  //其它异常
+        {
+            Toolkit.getDefaultToolkit().beep();
+            e.printStackTrace();
+        }
+        finally
+        {
+            try                              //关闭流
+            {
+                if (fileOutputStream != null)
+                {
+                    fileOutputStream.close();
+                }
+                if (objectOutputStream != null)
+                {
+                    objectOutputStream.close();
+                }
+            }
+            catch (NullPointerException e)    //空指针异常
+            {
+                Toolkit.getDefaultToolkit().beep();
+                System.err.println("文件已经被关闭，无法再次关闭！！！");
+            }
+            catch (Exception e)              //其它异常
+            {
+                Toolkit.getDefaultToolkit().beep();
+                e.printStackTrace();
+            }
+        }
+        return result;
+    }
+
+    /**
+     * 读取
+     *
+     * @return ArrayList<data.Student>对象
+     */
+    public static ArrayList<data.Student> read()
+    {
+        ArrayList<data.Student> list = new ArrayList<>();
+        FileInputStream fileInputStream = null;
+        //FileInputStream从文件系统中的文件中获取输入字节。 哪些文件可用取决于主机环境。
+        ObjectInputStream objectInputStream = null;
+        //ObjectInputStream 反序列化之前使用 ObjectOutputStream 编写的原始数据和对象。
+        try                                  //文件流打开，文件读写
+        {
+            fileInputStream = new FileInputStream(path);
+            objectInputStream = new ObjectInputStream(fileInputStream);
+            data.Student student;
+            Object obj = null;
+            while ((obj = objectInputStream.readObject()) != null)
+            {
+                student = (data.Student) obj;
+                list.add(student);
+            }
+        }
+        catch (EOFException e)          //到达末尾
+        {
+            return list;
+        }
+        catch (FileNotFoundException e)      //文件未找到
+        {
+            Toolkit.getDefaultToolkit().beep();
+            System.err.println("文件未找到！！！  " + "\n错误内容：" + e.toString());
+        }
+        catch (Exception e)                  //其它异常
+        {
+            Toolkit.getDefaultToolkit().beep();
+            e.printStackTrace();
+        }
+        finally
+        {
+            try                              //关闭流
+            {
+                if (fileInputStream != null)
+                {
+                    fileInputStream.close();
+                }
+                if (objectInputStream != null)
+                {
+                    objectInputStream.close();
+                }
+            }
+            catch (NullPointerException e)    //空指针异常
+            {
+                Toolkit.getDefaultToolkit().beep();
+                System.err.println("文件已经被关闭，无法再次关闭！！！");
+            }
+            catch (Exception e)              //其它异常
+            {
+                Toolkit.getDefaultToolkit().beep();
+                e.printStackTrace();
+            }
+        }
+        return list;
+    }
+
+    //第二种方法，直接读写集合
+    //// TODO: 2022/1/14
+}
+�
+H:\����\��������\javaʵ�ּ򵥵ĳɼ�����\\src\\main\\java\\io\\u_test.java
+package io;
+
+import data.Student;
+
+/**
+ * Project name(项目名称)：java实现简单的成绩管理
+ * Package(包名): io
+ * Class(类名): u_test
+ * Author(作者）: mao
+ * Author QQ：1296193245
+ * GitHub：https://github.com/maomao124/
+ * Date(创建日期)： 2022/1/14
+ * Time(创建时间)： 21:55
+ * Version(版本): 1.0
+ * Description(描述)： 无
+ */
+
+public class u_test
+{
+    public static void main(String[] args)
+    {
+        Student student = new Student(12, "张三");
+        student.getMap().put("语文", 85.0f);
+        student.getMap().put("数学", 76.0f);
+        student.getMap().put("英语", 68.5f);
+        System.out.println(student);
+
+        Student student1 = new Student(14, "李四");
+        student1.getMap().put("语文", 83.0f);
+        student1.getMap().put("数学", 79.0f);
+        student1.getMap().put("英语", 88.5f);
+        System.out.println(student1);
+
+        Student student2 = new Student(18, "王五");
+        student2.getMap().put("语文", 78.0f);
+        student2.getMap().put("数学", 72.0f);
+        student2.getMap().put("英语", 59.5f);
+        System.out.println(student2);
+
+        data.student_arraylist.getList().add(student);
+        data.student_arraylist.getList().add(student1);
+        data.student_arraylist.getList().add(student2);
+
+        System.out.println(data.student_arraylist.getList().size());
+
+        io.Student.write();
+    }
+}
+�
+H:\����\��������\javaʵ�ּ򵥵ĳɼ�����\\src\\main\\java\\io\\u_test1.java
+package io;
+
+
+import operate.Function;
+
+/**
+ * Project name(项目名称)：java实现简单的成绩管理
+ * Package(包名): io
+ * Class(类名): u_test1
+ * Author(作者）: mao
+ * Author QQ：1296193245
+ * GitHub：https://github.com/maomao124/
+ * Date(创建日期)： 2022/1/14
+ * Time(创建时间)： 22:01
+ * Version(版本): 1.0
+ * Description(描述)： 无
+ */
+
+public class u_test1
+{
+    public static void main(String[] args)
+    {
+        data.student_arraylist.setList(io.Student.read());
+        System.out.println(data.student_arraylist.getList().size());
+        for (data.Student student : data.student_arraylist.getList())
+        {
+            System.out.println(student);
+        }
+        Function function = new Function();
+        function.subject_score("语文", "desc");
+
+        System.out.println(function.getStudentInformation());
+    }
+}
+�
+H:\����\��������\javaʵ�ּ򵥵ĳɼ�����\\src\\main\\java\\operate\\Function.java
+package operate;
+
+import data.Student;
+import data.student_arraylist;
+
+import java.awt.*;
+import java.util.*;
+
+/**
+ * Project name(项目名称)：java实现简单的成绩管理
+ * Package(包名): operate
+ * Class(类名): Function
+ * Author(作者）: mao
+ * Author QQ：1296193245
+ * GitHub：https://github.com/maomao124/
+ * Date(创建日期)： 2022/1/14
+ * Time(创建时间)： 22:37
+ * Version(版本): 1.0
+ * Description(描述)： 无
+ */
+
+public class Function implements Function_interface
+{
+
+    /**
+     * 添加一名学生，不包含成绩
+     *
+     * @param no   学号
+     * @param name 姓名
+     * @return 是否成功 boolean
+     */
+    @Override
+    public boolean addStudent(long no, String name)
+    {
+        if (data.student_arraylist.getList().size() == 0)         //为空，直接插入，不用担心学号重复，因为学号为主键
+        {
+            Student student = new Student(no, name);
+            data.student_arraylist.getList().add(student);
+            return true;
+        }
+        //集合不为空
+        //遍历集合，传入的学号是否已经存在
+        for (int i = 0; i < student_arraylist.getList().size(); i++)
+        {
+            data.Student student = data.student_arraylist.getList().get(i);
+            if (student.getNo() == no)            //找到相等的学号，插入失败
+            {
+                Toolkit.getDefaultToolkit().beep();
+                return false;
+            }
+        }
+        //没有重复的情况
+        Student student = new Student(no, name);
+        data.student_arraylist.getList().add(student);
+        return true;
+    }
+
+    /**
+     * 删除一名学生，这会清除学生对应的成绩
+     *
+     * @param no 学号
+     * @return boolean
+     */
+
+    @Override
+    public boolean deleteStudent(long no)
+    {
+        //判断传入的学号是否存在
+        for (int i = 0; i < student_arraylist.getList().size(); i++)
+        {
+            data.Student student = data.student_arraylist.getList().get(i);
+            if (student.getNo() == no)            //找到相等的学号，插入失败
+            {
+                data.student_arraylist.getList().remove(student);
+                return true;
+            }
+        }
+        //不存在
+        return false;
+    }
+
+    /**
+     * 修改一名学生的信息，不包括成绩
+     *
+     * @param no     学号
+     * @param name   姓名
+     * @param old_no 老学号
+     * @return boolean
+     */
+    @Override
+    public boolean updateStudent(long no, String name, long old_no)
+    {
+        //判断新学号是否和集合中的所有学号的某一个学号相同，因为学号唯一，不能占用别人的学号
+        for (int i = 0; i < student_arraylist.getList().size(); i++)
+        {
+            data.Student student = data.student_arraylist.getList().get(i);
+            if (student.getNo() == no && student.getNo() != old_no)            //找到相等的学号，不允许修改
+            {
+                return false;
+            }
+        }
+        //判断老学号是否存在于集合中，如果不存在，则无法进行修改
+        for (int i = 0; i < student_arraylist.getList().size(); i++)
+        {
+            data.Student student = data.student_arraylist.getList().get(i);
+            if (student.getNo() == old_no)            //找到相等的学号 可以进行修改
+            {
+                student.setNo(no);
+                student.setName(name);
+                return true;
+            }
+        }
+        //没找到，则老学号对应的学生不在集合里，更新失败
+        return false;
+    }
+
+    /**
+     * 查看学生的所有信息
+     */
+
+    @Override
+    public void display()
+    {
+        for (int i = 0; i < student_arraylist.getList().size(); i++)
+        {
+            data.Student student = data.student_arraylist.getList().get(i);
+            System.out.println(student);
+        }
+    }
+
+    /**
+     * 获得学生的所有信息，返回字符串，不在控制台上打印
+     *
+     * @return String
+     */
+    @Override
+    public String getStudentInformation()
+    {
+        StringBuilder stringBuilder = new StringBuilder();
+        for (int i = 0; i < student_arraylist.getList().size(); i++)
+        {
+            data.Student student = data.student_arraylist.getList().get(i);
+            stringBuilder.append(student).append("\n");
+        }
+        return stringBuilder.toString();
+    }
+
+    /**
+     * 查找学生信息，按学号查找
+     *
+     * @param no 学号
+     * @return data.Student对象
+     */
+    @Override
+    public Student findByNo(long no)
+    {
+        Student student = null;
+        for (int i = 0; i < student_arraylist.getList().size(); i++)
+        {
+            data.Student student1 = data.student_arraylist.getList().get(i);
+            if (student1.getNo() == no)            //找到相等的学号
+            {
+                student = student1;
+                break;
+            }
+        }
+        return student;
+    }
+
+    /**
+     * 查找学生信息，按姓名查找
+     *
+     * @param name 学生姓名
+     */
+    @Override
+    public void findByName(String name)
+    {
+        for (int i = 0; i < student_arraylist.getList().size(); i++)
+        {
+            data.Student student = data.student_arraylist.getList().get(i);
+            if (student.getName().equals(name))            //找到相等的姓名
+            {
+                System.out.println(student);
+            }
+        }
+    }
+
+    /**
+     * 获得查找学生信息的结果，按姓名查找，返回字符串，不在控制台上打印
+     *
+     * @param name 学生姓名
+     * @return 字符串
+     */
+    @Override
+    public String getFindByName(String name)
+    {
+        StringBuilder stringBuilder = new StringBuilder();
+        for (int i = 0; i < student_arraylist.getList().size(); i++)
+        {
+            data.Student student = data.student_arraylist.getList().get(i);
+            if (student.getName().equals(name))            //找到相等的姓名
+            {
+                stringBuilder.append(student).append("\n");
+            }
+        }
+        return stringBuilder.toString();
+    }
+
+    /**
+     * 添加一名学生的成绩信息，如果键已经存在，则更新成绩
+     *
+     * @param no      学号
+     * @param subject 科目
+     * @param score   分数
+     * @return boolean
+     */
+    @Override
+    public boolean addStudentScore(long no, String subject, float score)
+    {
+        //还是得找
+        for (int i = 0; i < student_arraylist.getList().size(); i++)
+        {
+            data.Student student = data.student_arraylist.getList().get(i);
+            if (student.getNo() == no)            //找到相等的学号
+            {
+                student.getMap().put(subject, score);
+                return true;
+            }
+        }
+        //没找到
+        return false;
+    }
+
+    /**
+     * 修改一名学生的成绩信息
+     *
+     * @param no      学号
+     * @param subject 科目
+     * @param score   分数
+     * @return boolean
+     */
+    @Override
+    public boolean updateStudentScore(long no, String subject, float score)
+    {
+        for (int i = 0; i < student_arraylist.getList().size(); i++)
+        {
+            data.Student student = data.student_arraylist.getList().get(i);
+            if (student.getNo() == no)            //找到相等的学号
+            {
+                if (student.getMap().containsKey(subject))      //集合存在对应的科目，可以修改
+                {
+                    student.getMap().put(subject, score);
+                    return true;
+                }
+                else            //不存在对应的科目，无法修改
+                {
+                    return false;
+                }
+            }
+        }
+        //没找到该学号
+        return false;
+    }
+
+    /**
+     * 删除一名学生的一门科目的成绩
+     *
+     * @param no      学号
+     * @param subject 科目
+     * @return boolean
+     */
+    @Override
+    public boolean removeStudentScore(long no, String subject)
+    {
+        for (int i = 0; i < student_arraylist.getList().size(); i++)
+        {
+            data.Student student = data.student_arraylist.getList().get(i);
+            if (student.getNo() == no)            //找到相等的学号
+            {
+                if (student.getMap().containsKey(subject))      //集合存在对应的科目，可以删除
+                {
+                    student.getMap().remove(subject);
+                    return true;
+                }
+                else            //不存在对应的科目，无法删除
+                {
+                    return false;
+                }
+            }
+        }
+        //没找到该学号
+        return false;
+    }
+
+    /**
+     * 删除一名学生的所有成绩
+     *
+     * @param no 学号
+     * @return boolean
+     */
+    @Override
+    public boolean removeAllStudentScore(long no)
+    {
+        for (int i = 0; i < student_arraylist.getList().size(); i++)
+        {
+            data.Student student = data.student_arraylist.getList().get(i);
+            if (student.getNo() == no)            //找到相等的学号
+            {
+                student.getMap().clear();       //清空成绩
+            }
+        }
+        //没找到该学号
+        return false;
+    }
+
+    /**
+     * 获得一名学生的平均分
+     *
+     * @param no 学号
+     * @return float类型 值为-1则表示计算失败，原因为传入的学号不存在
+     */
+    @Override
+    public float AverageScore(long no)
+    {
+        float result = -1.0f;
+        for (int i = 0; i < student_arraylist.getList().size(); i++)
+        {
+            data.Student student = data.student_arraylist.getList().get(i);
+            if (student.getNo() == no)            //找到相等的学号
+            {
+                float sum = 0.0f;
+                for (String subject : student.getMap().keySet())
+                {
+                    sum = sum + student.getMap().get(subject);
+                }
+                result = sum / student.getMap().size();
+                return result;
+            }
+        }
+        //没找到该学号 返回-1
+        return result;
+    }
+
+    /**
+     * 查看某门科目的成绩，并且按升序或者降序排列，输出有三列，学号，姓名，分数
+     *
+     * @param subject     科目
+     * @param asc_or_desc 升序或者降序
+     */
+    @Override
+    public void subject_score(String subject, String asc_or_desc)
+    {
+        String str = null;
+        ArrayList<Student> list = new ArrayList<>();
+        //键为学生对象，值为分数
+        for (int i = 0; i < student_arraylist.getList().size(); i++)
+        {
+            data.Student student = data.student_arraylist.getList().get(i);
+            if (student.getMap().containsKey(subject))      //集合存在对应的科目
+            {
+                list.add(student);
+            }
+        }
+        if (list.size() == 0)     //空
+        {
+            Toolkit.getDefaultToolkit().beep();
+            System.out.println("科目" + subject + "无对应的数据");
+            return;
+        }
+        //排序
+        if (asc_or_desc.equals("asc") || asc_or_desc.equals("ASC"))       //升序
+        {
+            str = "升序";
+            /*
+            list.sort((stu1, stu2) ->
+            {
+                if (stu1.getMap().get(subject) > stu2.getMap().get(subject))
+                {
+                    return 1;
+                }
+                else if (stu1.getMap().get(subject) < stu2.getMap().get(subject))
+                {
+                    return -1;
+                }
+                else
+                {
+                    return 0;
+                }
+            });
+             */
+            list.sort(new Comparator<>()
+            {
+                @Override
+                public int compare(Student stu1, Student stu2)
+                {
+                    if (stu1.getMap().get(subject) > stu2.getMap().get(subject))
+                    {
+                        return 1;
+                    }
+                    else if (stu1.getMap().get(subject) < stu2.getMap().get(subject))
+                    {
+                        return -1;
+                    }
+                    else
+                    {
+                        return 0;
+                    }
+                }
+            });
+        }
+        else if (asc_or_desc.equals("desc") || asc_or_desc.equals("DESC"))       //降序
+        {
+            str = "降序";
+            list.sort((stu1, stu2) ->
+            {
+                if (stu1.getMap().get(subject) > stu2.getMap().get(subject))
+                {
+                    return -1;
+                }
+                else if (stu1.getMap().get(subject) < stu2.getMap().get(subject))
+                {
+                    return 1;
+                }
+                else
+                {
+                    return 0;
+                }
+            });
+            /*
+            list.sort(new Comparator<Student>()
+            {
+                @Override
+                public int compare(Student stu1, Student stu2)
+                {
+                    if (stu1.getMap().get(subject) > stu2.getMap().get(subject))
+                    {
+                        return -1;
+                    }
+                    else if (stu1.getMap().get(subject) < stu2.getMap().get(subject))
+                    {
+                        return 1;
+                    }
+                    else
+                    {
+                        return 0;
+                    }
+                }
+            });
+             */
+        }
+        else
+        {
+            Toolkit.getDefaultToolkit().beep();
+            System.out.println("排序方式只能为升序或者降序");
+            return;
+        }
+        //开始遍历
+        System.out.println("科目：" + subject + "    排序方式：" + str);
+        float sumScore = 0;
+        float AverageScore = 0;
+
+        for (Student student : list)
+        {
+            float number = student.getMap().get(subject);
+            System.out.println(student.getNo() + "\t\t" + student.getName() + "\t\t" + number);
+            sumScore = sumScore + number;
+        }
+        AverageScore = sumScore / list.size();
+        System.out.println();
+        System.out.println("总数：" + list.size() + "    科目平均分：" + AverageScore);
+    }
+
+    /**
+     * 获得某门科目的成绩，并且按升序或者降序排列，返回字符串,不在控制台上打印
+     *
+     * @param subject     科目
+     * @param asc_or_desc 升序或者降序
+     * @return 字符串
+     */
+    @Override
+    public String getSubject_score(String subject, String asc_or_desc)
+    {
+        String str = null;
+        StringBuilder stringBuilder = new StringBuilder();
+        ArrayList<Student> list = new ArrayList<>();
+        //键为学生对象，值为分数
+        for (int i = 0; i < student_arraylist.getList().size(); i++)
+        {
+            data.Student student = data.student_arraylist.getList().get(i);
+            if (student.getMap().containsKey(subject))      //集合存在对应的科目
+            {
+                list.add(student);
+            }
+        }
+        if (list.size() == 0)     //空
+        {
+            Toolkit.getDefaultToolkit().beep();
+            stringBuilder.append("科目").append(subject).append("无对应的数据\n");
+            return stringBuilder.toString();
+        }
+        //排序
+        if (asc_or_desc.equals("asc") || asc_or_desc.equals("ASC"))       //升序
+        {
+            str = "升序";
+            /*
+            list.sort((stu1, stu2) ->
+            {
+                if (stu1.getMap().get(subject) > stu2.getMap().get(subject))
+                {
+                    return 1;
+                }
+                else if (stu1.getMap().get(subject) < stu2.getMap().get(subject))
+                {
+                    return -1;
+                }
+                else
+                {
+                    return 0;
+                }
+            });
+             */
+            list.sort(new Comparator<>()
+            {
+                @Override
+                public int compare(Student stu1, Student stu2)
+                {
+                    if (stu1.getMap().get(subject) > stu2.getMap().get(subject))
+                    {
+                        return 1;
+                    }
+                    else if (stu1.getMap().get(subject) < stu2.getMap().get(subject))
+                    {
+                        return -1;
+                    }
+                    else
+                    {
+                        return 0;
+                    }
+                }
+            });
+        }
+        else if (asc_or_desc.equals("desc") || asc_or_desc.equals("DESC"))       //降序
+        {
+            str = "降序";
+            list.sort((stu1, stu2) ->
+            {
+                if (stu1.getMap().get(subject) > stu2.getMap().get(subject))
+                {
+                    return -1;
+                }
+                else if (stu1.getMap().get(subject) < stu2.getMap().get(subject))
+                {
+                    return 1;
+                }
+                else
+                {
+                    return 0;
+                }
+            });
+            /*
+            list.sort(new Comparator<Student>()
+            {
+                @Override
+                public int compare(Student stu1, Student stu2)
+                {
+                    if (stu1.getMap().get(subject) > stu2.getMap().get(subject))
+                    {
+                        return -1;
+                    }
+                    else if (stu1.getMap().get(subject) < stu2.getMap().get(subject))
+                    {
+                        return 1;
+                    }
+                    else
+                    {
+                        return 0;
+                    }
+                }
+            });
+             */
+        }
+        else
+        {
+            Toolkit.getDefaultToolkit().beep();
+            stringBuilder.append("排序方式只能为升序或者降序\n");
+            return null;
+        }
+        //开始遍历
+        stringBuilder.append("科目：").append(subject).append("    排序方式：").append(str);
+        stringBuilder.append("\n");
+        float sumScore = 0;
+        float AverageScore = 0;
+
+        for (Student student : list)
+        {
+            float number = student.getMap().get(subject);
+            stringBuilder.append(student.getNo()).append("\t\t").append(student.getName()).append("\t\t").append(number);
+            stringBuilder.append("\n");
+            sumScore = sumScore + number;
+        }
+        AverageScore = sumScore / list.size();
+        stringBuilder.append("\n");
+        stringBuilder.append("总数：").append(list.size()).append("    科目平均分：").append(AverageScore);
+        stringBuilder.append("\n");
+        return stringBuilder.toString();
+    }
+}
+�
+H:\����\��������\javaʵ�ּ򵥵ĳɼ�����\\src\\main\\java\\operate\\Function_interface.java
+package operate;
+
+import data.Student;
+
+/**
+ * Project name(项目名称)：java实现简单的成绩管理
+ * Package(包名): operate
+ * Interface(接口名): Function_interface
+ * Author(作者）: mao
+ * Author QQ：1296193245
+ * GitHub：https://github.com/maomao124/
+ * Date(创建日期)： 2022/1/14
+ * Time(创建时间)： 22:17
+ * Version(版本): 1.0
+ * Description(描述)： 函数的接口
+ * 参数说明：
+ * long no：学号
+ * String name：姓名
+ * long old_no：老的学号
+ * String subject：科目
+ * float score：分数
+ * String asc_or_desc：排序方式，asc为升序，desc为降序，此参数只能存入这两个值
+ */
+
+public interface Function_interface
+{
+    //添加一名学生，不包含成绩
+    public boolean addStudent(long no, String name);
+
+    //删除一名学生，这会清除学生对应的成绩
+    public boolean deleteStudent(long no);
+
+    //修改一名学生的信息，不包括成绩
+    public boolean updateStudent(long no, String name, long old_no);
+
+    //查看学生的所有信息
+    public void display();
+
+    //获得学生的所有信息，返回字符串，不在控制台上打印
+    public String getStudentInformation();
+
+    //查找学生信息，按学号查找
+    public Student findByNo(long no);
+
+    //查找学生信息，按姓名查找
+    public void findByName(String name);
+
+    //获得查找学生信息的结果，按姓名查找，返回字符串，不在控制台上打印
+    public String getFindByName(String name);
+
+    //添加一名学生的成绩信息，如果键已经存在，则更新成绩
+    public boolean addStudentScore(long no, String subject, float score);
+
+    //修改一名学生的成绩信息
+    public boolean updateStudentScore(long no, String subject, float score);
+
+    //删除一名学生的一门科目的成绩
+    public boolean removeStudentScore(long no, String subject);
+
+    //删除一名学生的所有成绩
+    public boolean removeAllStudentScore(long no);
+
+    //获得一名学生的平均分
+    public float AverageScore(long no);
+
+    //查看某门科目的成绩，并且按升序或者降序排列
+    public void subject_score(String subject, String asc_or_desc);
+
+    //获得某门科目的成绩，并且按升序或者降序排列，返回字符串,不在控制台上打印
+    public String getSubject_score(String subject, String asc_or_desc);
+}
+�
+H:\����\��������\javaʵ�ּ򵥵ĳɼ�����\\src\\main\\java\\Run.java
+import UI.MainPanel;
+import io.ErrorLog;
+
+import java.awt.*;
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.io.Writer;
+
+/**
+ * Project name(项目名称)：java实现简单的成绩管理
+ * Package(包名): PACKAGE_NAME
+ * Class(类名): Run
+ * Author(作者）: mao
+ * Author QQ：1296193245
+ * GitHub：https://github.com/maomao124/
+ * Date(创建日期)： 2022/1/15
+ * Time(创建时间)： 13:38
+ * Version(版本): 1.0
+ * Description(描述)： 无
+ */
+
+public class Run
+{
+    public static void main(String[] args)
+    {
+        try
+        {
+            data.student_arraylist.setList(io.Student.read());  //读
+            new MainPanel();
+        }
+        catch (Exception e)
+        {
+            Toolkit.getDefaultToolkit().beep();
+            e.printStackTrace();
+            final Writer result = new StringWriter();
+            final PrintWriter printWriter = new PrintWriter(result);
+            e.printStackTrace(printWriter);
+            String stackTraceStr = result.toString();
+            ErrorLog.write(stackTraceStr);
+        }
+    }
+}
+�
+H:\����\��������\javaʵ�ּ򵥵ĳɼ�����\\src\\main\\java\\UI\\AddStudent.java
+package UI;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+/**
+ * Project name(项目名称)：java实现简单的成绩管理
+ * Package(包名): UI
+ * Class(类名): AddStudent
+ * Author(作者）: mao
+ * Author QQ：1296193245
+ * GitHub：https://github.com/maomao124/
+ * Date(创建日期)： 2022/1/15
+ * Time(创建时间)： 14:59
+ * Version(版本): 1.0
+ * Description(描述)： 无
+ */
+
+public class AddStudent
+{
+    JDialog jDialog;
+
+    public AddStudent()
+    {
+        jDialog = new JDialog(MainPanel.jFrame, "添加学生");
+        int w = 300;
+        int h = 200;
+        int x = MainPanel.jFrame.getX();
+        int y = MainPanel.jFrame.getY();
+        //System.out.println(x+"  "+y);
+        int width = MainPanel.jFrame.getWidth();
+        int height = MainPanel.jFrame.getHeight();
+        int Location_x = x + width / 2 - w / 2;
+        int Location_y = y + height / 2 - h / 2;
+        jDialog.setLocation(Location_x, Location_y);
+        jDialog.setSize(w, h);
+
+        JLabel jLabel_no = new JLabel("请输入学生学号：");
+        JLabel jLabel_name = new JLabel("请输入学生姓名：");
+        JTextField JTextField_no = new JTextField();
+        JTextField JTextField_name = new JTextField();
+        JButton jButton = new JButton("确定");
+        jButton.setBackground(Color.cyan);
+
+        JPanel jPanel = new JPanel();
+        JPanel jPanel_no = new JPanel();
+        JPanel jPanel_name = new JPanel();
+        jPanel.setLayout(new GridLayout(3, 1));
+        //jPanel_no.setLayout(new GridLayout(1, 2));
+        //jPanel_name.setLayout(new GridLayout(1, 2));
+        jPanel_no.setLayout(new BorderLayout());
+        jPanel_name.setLayout(new BorderLayout());
+
+        /*
+        jPanel_no.add(jLabel_no);
+        jPanel_no.add(JTextField_no);
+        jPanel_name.add(jLabel_name);
+        jPanel_name.add(JTextField_name);
+         */
+        jPanel_no.add(jLabel_no, BorderLayout.WEST);
+        jPanel_no.add(JTextField_no, BorderLayout.CENTER);
+        jPanel_name.add(jLabel_name, BorderLayout.WEST);
+        jPanel_name.add(JTextField_name, BorderLayout.CENTER);
+        jPanel.add(jPanel_no);
+        jPanel.add(jPanel_name);
+        jPanel.add(jButton);
+        jDialog.add(jPanel);
+
+        jDialog.setVisible(true);
+        //jDialog.dispose();
+
+        jButton.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                AddStudent.this.addStudent(JTextField_no, JTextField_name);
+            }
+        });
+    }
+
+    private void addStudent(JTextField JTextField_no, JTextField JTextField_name)
+    {
+        long no = -1;
+        String name;
+        try
+        {
+            no = Long.parseLong(JTextField_no.getText());
+        }
+        catch (Exception e)
+        {
+            Toolkit.getDefaultToolkit().beep();
+            JOptionPane.showMessageDialog(null, "输入的学号不是long型！", "提示", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        name = JTextField_name.getText();
+
+        if (no == -1)
+        {
+            Toolkit.getDefaultToolkit().beep();
+            JOptionPane.showMessageDialog(null, "输入的学号为-1！", "提示", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (name == null)
+        {
+            Toolkit.getDefaultToolkit().beep();
+            JOptionPane.showMessageDialog(null, "姓名为空！", "提示", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (name.equals(""))
+        {
+            Toolkit.getDefaultToolkit().beep();
+            JOptionPane.showMessageDialog(null, "姓名为空！", "提示", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        boolean result = MainPanel.function.addStudent(no, name);
+        if (!result)
+        {
+            Toolkit.getDefaultToolkit().beep();
+            JOptionPane.showMessageDialog(null, "插入失败！", "提示", JOptionPane.ERROR_MESSAGE);
+        }
+        else
+        {
+            MainPanel.jTextArea.setText(MainPanel.function.getStudentInformation());
+            io.Student.write();
+            jDialog.dispose();
+        }
+    }
+}
+�
+H:\����\��������\javaʵ�ּ򵥵ĳɼ�����\\src\\main\\java\\UI\\AddStudentScore.java
+package UI;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+/**
+ * Project name(项目名称)：java实现简单的成绩管理
+ * Package(包名): UI
+ * Class(类名): AddStudentScore
+ * Author(作者）: mao
+ * Author QQ：1296193245
+ * GitHub：https://github.com/maomao124/
+ * Date(创建日期)： 2022/1/15
+ * Time(创建时间)： 17:45
+ * Version(版本): 1.0
+ * Description(描述)： 无
+ */
+
+public class AddStudentScore
+{
+    JDialog jDialog;
+    data.Student student;
+
+    public AddStudentScore(data.Student student)
+    {
+        this.student = student;
+
+        jDialog = new JDialog(MainPanel.jFrame, "添加学生\"" + student.getName() + "\"的成绩");
+        int w = 300;
+        int h = 200;
+        int x = MainPanel.jFrame.getX();
+        int y = MainPanel.jFrame.getY();
+        //System.out.println(x+"  "+y);
+        int width = MainPanel.jFrame.getWidth();
+        int height = MainPanel.jFrame.getHeight();
+        int Location_x = x + width / 2 - w / 2;
+        int Location_y = y + height / 2 - h / 2;
+        jDialog.setLocation(Location_x, Location_y);
+        jDialog.setSize(w, h);
+
+        JLabel jLabel_subject = new JLabel("请输入科目：");
+        JLabel jLabel_score = new JLabel("请输入分数：");
+        JTextField JTextField_subject = new JTextField();
+        JTextField JTextField_score = new JTextField();
+        JButton jButton = new JButton("确定");
+        jButton.setBackground(Color.cyan);
+
+        JPanel jPanel = new JPanel();
+        JPanel jPanel_no = new JPanel();
+        JPanel jPanel_name = new JPanel();
+        jPanel.setLayout(new GridLayout(3, 1));
+        //jPanel_no.setLayout(new GridLayout(1, 2));
+        //jPanel_name.setLayout(new GridLayout(1, 2));
+        jPanel_no.setLayout(new BorderLayout());
+        jPanel_name.setLayout(new BorderLayout());
+
+        /*
+        jPanel_no.add(jLabel_no);
+        jPanel_no.add(JTextField_no);
+        jPanel_name.add(jLabel_name);
+        jPanel_name.add(JTextField_name);
+         */
+        jPanel_no.add(jLabel_subject, BorderLayout.WEST);
+        jPanel_no.add(JTextField_subject, BorderLayout.CENTER);
+        jPanel_name.add(jLabel_score, BorderLayout.WEST);
+        jPanel_name.add(JTextField_score, BorderLayout.CENTER);
+        jPanel.add(jPanel_no);
+        jPanel.add(jPanel_name);
+        jPanel.add(jButton);
+        jDialog.add(jPanel);
+
+        jDialog.setVisible(true);
+        //jDialog.dispose();
+
+        jButton.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                AddStudentScore.this.add(JTextField_subject, JTextField_score);
+            }
+        });
+    }
+
+    private void add(JTextField JTextField_subject, JTextField JTextField_score)
+    {
+        String subject;
+        float score;
+        try
+        {
+            score = Float.parseFloat(JTextField_score.getText());
+        }
+        catch (Exception e)
+        {
+            Toolkit.getDefaultToolkit().beep();
+            JOptionPane.showMessageDialog(null, "输入的分数不是float型！", "提示", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        subject = JTextField_subject.getText();
+        if (score < 0)
+        {
+            Toolkit.getDefaultToolkit().beep();
+            JOptionPane.showMessageDialog(null, "输入的分数不能为负数！", "提示", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        boolean result = MainPanel.function.addStudentScore(student.getNo(), subject, score);
+        if (!result)
+        {
+            Toolkit.getDefaultToolkit().beep();
+            JOptionPane.showMessageDialog(null, "成绩添加失败！", "提示", JOptionPane.ERROR_MESSAGE);
+        }
+        else
+        {
+            JTextField_subject.setText("");
+            JTextField_score.setText("");
+            MainPanel.jTextArea.setText(MainPanel.function.getStudentInformation());
+            io.Student.write();
+        }
+    }
+}
+�
+H:\����\��������\javaʵ�ּ򵥵ĳɼ�����\\src\\main\\java\\UI\\MainPanel.java
+package UI;
+
+import operate.Function;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+
+/**
+ * Project name(项目名称)：java实现简单的成绩管理
+ * Package(包名): UI
+ * Class(类名): MainPatch
+ * Author(作者）: mao
+ * Author QQ：1296193245
+ * GitHub：https://github.com/maomao124/
+ * Date(创建日期)： 2022/1/15
+ * Time(创建时间)： 13:37
+ * Version(版本): 1.0
+ * Description(描述)： 无
+ */
+
+public class MainPanel
+{
+    static Function function = new Function();
+    static JFrame jFrame;
+    static JTextArea jTextArea;                //文本域
+    private JButton addStudent;
+    private JButton deleteStudent;
+    private JButton updateStudent;
+    private JButton display;
+    private JButton findByNo;
+    private JButton findByName;
+    private JButton globalFind;
+    private JButton addStudentScore;
+    private JButton updateStudentScore;
+    private JButton removeStudentScore;
+    private JButton removeAllStudentScore;
+    private JButton AverageScore;
+    private JButton subject_score;
+
+
+    public MainPanel()
+    {
+        jFrame = new JFrame("成绩管理");                //初始化顶层面板
+        jFrame.setSize(1280, 720);
+        int screenWidth = Toolkit.getDefaultToolkit().getScreenSize().width;       //获取屏幕宽度
+        int screenHeight = Toolkit.getDefaultToolkit().getScreenSize().height;     //获取屏幕高度
+        jFrame.setLocation(screenWidth / 2 - jFrame.getWidth() / 2, screenHeight / 2 - jFrame.getHeight() / 2);  //位于屏幕中央
+        jFrame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+
+
+        JPanel jPanel_main = new JPanel();
+        JPanel jPanel_up = new JPanel();
+        JPanel jPanel_up1 = new JPanel();
+        JPanel jPanel_up2 = new JPanel();
+        JPanel jPanel_down = new JPanel();
+        jPanel_main.setLayout(new BorderLayout());          //构造一个新的边框布局，组件之间没有间隙
+        jPanel_up.setLayout(new GridLayout(2, 1));
+
+        Font font = new Font("宋体", Font.BOLD, 20);
+        jTextArea = new JTextArea();
+        jTextArea.setFont(font);
+        JScrollPane jScrollPane = new JScrollPane(jTextArea);       //加入滚动面板
+
+        this.initBottom();                              //初始化按钮
+        this.initListener();                            //初始化监听器
+
+        jPanel_down.add(display);
+        jPanel_up1.add(addStudent);
+        jPanel_up1.add(deleteStudent);
+        jPanel_up1.add(updateStudent);
+        jPanel_up1.add(findByNo);
+        jPanel_up1.add(findByName);
+        jPanel_up1.add(globalFind);
+
+        jPanel_up2.add(addStudentScore);
+        jPanel_up2.add(updateStudentScore);
+
+        jPanel_up.add(jPanel_up1);
+        jPanel_up.add(jPanel_up2);
+
+        jPanel_main.add(jScrollPane, BorderLayout.CENTER);
+        jPanel_main.add(jPanel_up, BorderLayout.NORTH);
+        jPanel_main.add(jPanel_down, BorderLayout.SOUTH);
+        jFrame.add(jPanel_main);
+
+        jFrame.setVisible(true);
+
+        jTextArea.setText(function.getStudentInformation());
+    }
+
+    /**
+     * 初始化监听器
+     */
+    private void initListener()
+    {
+        jFrame.addWindowListener(new WindowAdapter()
+        {
+            @Override
+            public void windowClosing(WindowEvent e)
+            {
+                System.exit(1);
+            }
+        });
+
+        display.addActionListener(new ActionListener()
+        {
+
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                jTextArea.setText(function.getStudentInformation());
+            }
+        });
+
+        addStudent.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                new AddStudent();
+            }
+        });
+
+        deleteStudent.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                MainPanel.this.delete();
+            }
+        });
+
+        updateStudent.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                MainPanel.this.update();
+            }
+        });
+
+        findByNo.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                MainPanel.this.findByNo();
+            }
+        });
+
+        findByName.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                MainPanel.this.findByName();
+            }
+        });
+
+        globalFind.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                new Search();
+            }
+        });
+
+        addStudentScore.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                MainPanel.this.addStudentScore();
+            }
+        });
+
+        updateStudentScore.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                MainPanel.this.updateStudentScore();
+            }
+        });
+    }
+
+    /**
+     * 初始化按钮
+     */
+    private void initBottom()
+    {
+        display = new JButton("刷新");
+        addStudent = new JButton("添加");
+        deleteStudent = new JButton("删除");
+        updateStudent = new JButton("更新");
+        findByNo = new JButton("按学号查找");
+        findByName = new JButton("按姓名查找");
+        globalFind = new JButton("全局查找");
+        addStudentScore = new JButton("添加成绩");
+        updateStudentScore = new JButton("修改成绩");
+
+        display.setBackground(Color.cyan);
+        addStudent.setBackground(Color.cyan);
+        deleteStudent.setBackground(Color.cyan);
+        updateStudent.setBackground(Color.cyan);
+        findByNo.setBackground(Color.cyan);
+        findByName.setBackground(Color.cyan);
+        globalFind.setBackground(Color.cyan);
+        addStudentScore.setBackground(Color.cyan);
+        updateStudentScore.setBackground(Color.cyan);
+    }
+
+    /**
+     * 删除
+     */
+    private void delete()
+    {
+        long no;
+        String no_str = JOptionPane.showInputDialog(null, "请输入要删除的学号：");
+        if (no_str == null)
+        {
+            return;
+        }
+        if (no_str.equals(""))
+        {
+            Toolkit.getDefaultToolkit().beep();
+            JOptionPane.showMessageDialog(null, "学号不能为空!", "提示", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        try
+        {
+            no = Long.parseLong(no_str);
+        }
+        catch (Exception e)
+        {
+            Toolkit.getDefaultToolkit().beep();
+            JOptionPane.showMessageDialog(null, "输入的学号不是long型！", "提示", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (no < 0)
+        {
+            Toolkit.getDefaultToolkit().beep();
+            JOptionPane.showMessageDialog(null, "输入的学号不是正数！", "提示", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        data.Student student = function.findByNo(no);
+        if (student == null)
+        {
+            Toolkit.getDefaultToolkit().beep();
+            JOptionPane.showMessageDialog(null, "此学生不存在！", "提示", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        Toolkit.getDefaultToolkit().beep();
+        int result = JOptionPane.showConfirmDialog(null,
+                "学生信息为：\n" + student + "\n是否删除？", "提示", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+        if (result == 0)
+        {
+            boolean result1 = function.deleteStudent(no);
+            if (!result1)
+            {
+                Toolkit.getDefaultToolkit().beep();
+                JOptionPane.showMessageDialog(null, "删除失败！", "提示", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            MainPanel.jTextArea.setText(MainPanel.function.getStudentInformation());
+            io.Student.write();
+        }
+    }
+
+    /**
+     * 更新
+     */
+    private void update()
+    {
+        long no;
+        String no_str = JOptionPane.showInputDialog(null, "请输入要更新的旧学号：");
+        if (no_str == null)
+        {
+            return;
+        }
+        if (no_str.equals(""))
+        {
+            Toolkit.getDefaultToolkit().beep();
+            JOptionPane.showMessageDialog(null, "学号不能为空!", "提示", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        try
+        {
+            no = Long.parseLong(no_str);
+        }
+        catch (Exception e)
+        {
+            Toolkit.getDefaultToolkit().beep();
+            JOptionPane.showMessageDialog(null, "输入的学号不是long型！", "提示", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (no < 0)
+        {
+            Toolkit.getDefaultToolkit().beep();
+            JOptionPane.showMessageDialog(null, "输入的学号不是正数！", "提示", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        data.Student student = function.findByNo(no);
+        if (student == null)
+        {
+            Toolkit.getDefaultToolkit().beep();
+            JOptionPane.showMessageDialog(null, "此学生不存在！", "提示", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        new UpdateStudent(student);
+    }
+
+    /**
+     * 按学号查找
+     */
+    private void findByNo()
+    {
+        long no;
+        String no_str = JOptionPane.showInputDialog(null, "请输入要查找的学号：");
+        if (no_str == null)
+        {
+            return;
+        }
+        if (no_str.equals(""))
+        {
+            Toolkit.getDefaultToolkit().beep();
+            JOptionPane.showMessageDialog(null, "学号不能为空!", "提示", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        try
+        {
+            no = Long.parseLong(no_str);
+        }
+        catch (Exception e)
+        {
+            Toolkit.getDefaultToolkit().beep();
+            JOptionPane.showMessageDialog(null, "输入的学号不是long型！", "提示", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (no < 0)
+        {
+            Toolkit.getDefaultToolkit().beep();
+            JOptionPane.showMessageDialog(null, "输入的学号不是正数！", "提示", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        data.Student student = function.findByNo(no);
+        if (student == null)
+        {
+            Toolkit.getDefaultToolkit().beep();
+            JOptionPane.showMessageDialog(null, "此学生不存在！", "提示", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        JOptionPane.showMessageDialog(null,
+                "学生信息为：\n" + student + "\n", "查找结果", JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    private void findByName()
+    {
+        String name_str = JOptionPane.showInputDialog(null, "请输入要查找的姓名：");
+        if (name_str == null)
+        {
+            return;
+        }
+        if (name_str.equals(""))
+        {
+            Toolkit.getDefaultToolkit().beep();
+            JOptionPane.showMessageDialog(null, "姓名不能为空!", "提示", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        String result = function.getFindByName(name_str);
+        if (result == null)
+        {
+            Toolkit.getDefaultToolkit().beep();
+            JOptionPane.showMessageDialog(null, "查找结果为空!", "提示", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        if (result.equals(""))
+        {
+            Toolkit.getDefaultToolkit().beep();
+            JOptionPane.showMessageDialog(null, "查找结果为空!", "提示", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        jTextArea.setText(function.getFindByName(name_str));
+    }
+
+    /**
+     * 添加学生成绩信息
+     */
+    private void addStudentScore()
+    {
+        long no;
+        String no_str = JOptionPane.showInputDialog(null, "请输入要添加学生信息的学生学号：");
+        if (no_str == null)
+        {
+            return;
+        }
+        if (no_str.equals(""))
+        {
+            Toolkit.getDefaultToolkit().beep();
+            JOptionPane.showMessageDialog(null, "学号不能为空!", "提示", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        try
+        {
+            no = Long.parseLong(no_str);
+        }
+        catch (Exception e)
+        {
+            Toolkit.getDefaultToolkit().beep();
+            JOptionPane.showMessageDialog(null, "输入的学号不是long型！", "提示", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (no < 0)
+        {
+            Toolkit.getDefaultToolkit().beep();
+            JOptionPane.showMessageDialog(null, "输入的学号不是正数！", "提示", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        data.Student student = function.findByNo(no);
+        if (student == null)
+        {
+            Toolkit.getDefaultToolkit().beep();
+            JOptionPane.showMessageDialog(null, "此学生不存在！", "提示", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        new AddStudentScore(student);
+    }
+
+    /**
+     * 修改成绩
+     */
+    private void updateStudentScore()
+    {
+        long no;
+        String no_str = JOptionPane.showInputDialog(null, "请输入要修改学生信息的学生学号：");
+        if (no_str == null)
+        {
+            return;
+        }
+        if (no_str.equals(""))
+        {
+            Toolkit.getDefaultToolkit().beep();
+            JOptionPane.showMessageDialog(null, "学号不能为空!", "提示", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        try
+        {
+            no = Long.parseLong(no_str);
+        }
+        catch (Exception e)
+        {
+            Toolkit.getDefaultToolkit().beep();
+            JOptionPane.showMessageDialog(null, "输入的学号不是long型！", "提示", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (no < 0)
+        {
+            Toolkit.getDefaultToolkit().beep();
+            JOptionPane.showMessageDialog(null, "输入的学号不是正数！", "提示", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        data.Student student = function.findByNo(no);
+        if (student == null)
+        {
+            Toolkit.getDefaultToolkit().beep();
+            JOptionPane.showMessageDialog(null, "此学生不存在！", "提示", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        new UpdateStudentScore(student);
+    }
+}
+�
+H:\����\��������\javaʵ�ּ򵥵ĳɼ�����\\src\\main\\java\\UI\\Search.java
+package UI;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+/**
+ * Project name(项目名称)：java实现简单的成绩管理
+ * Package(包名): UI
+ * Class(类名): Search
+ * Author(作者）: mao
+ * Author QQ：1296193245
+ * GitHub：https://github.com/maomao124/
+ * Date(创建日期)： 2022/1/15
+ * Time(创建时间)： 17:16
+ * Version(版本): 1.0
+ * Description(描述)： 无
+ */
+
+public class Search
+{
+    private static int start = 0;                                            // 查找开始位置
+    private static int end = 0;                                              // 查找结束位置
+
+    public Search()
+    {
+        // 查找对话框
+        JDialog jDialog_search = new JDialog(MainPanel.jFrame, "全局查找");
+        jDialog_search.setSize(500, 150);
+        int x = MainPanel.jFrame.getX();
+        int y = MainPanel.jFrame.getY();
+        //System.out.println(x+"  "+y);
+        int width = MainPanel.jFrame.getWidth();
+        int height = MainPanel.jFrame.getHeight();
+        int search_x = x + width / 2 - 500 / 2;
+        int search_y = y + height / 2 - 150 / 2;
+        jDialog_search.setLocation(search_x, search_y);
+        JLabel label_search = new JLabel("查找的内容");
+        label_search.setFont(new Font("宋体", Font.BOLD, 15));
+        final JTextField textField_search = new JTextField(10);
+        JButton buttonFind = new JButton("查找下一个");
+        buttonFind.setBackground(Color.cyan);
+        JPanel panel = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 5));
+        JPanel panel1 = new JPanel(new BorderLayout());
+        JPanel panel2 = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 5));
+        panel.add(label_search);
+        panel2.add(buttonFind);
+        panel1.add(panel, BorderLayout.NORTH);
+        panel1.add(panel2, BorderLayout.SOUTH);
+        panel1.add(textField_search, BorderLayout.CENTER);
+        jDialog_search.add(panel1);
+        jDialog_search.setVisible(true);
+
+        // 查找下一个按钮监听器
+        buttonFind.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                String findText = textField_search.getText();       // 查找的字符串
+                String textArea = MainPanel.jTextArea.getText();              // 当前文本框的内容
+                start = textArea.indexOf(findText, end);
+                end = start + findText.length();
+                // 没有找到
+                if (start == -1)
+                {
+                    Toolkit.getDefaultToolkit().beep();
+                    JOptionPane.showMessageDialog(null,
+                            "已经到达文档尾部", "提示", JOptionPane.WARNING_MESSAGE);
+                    MainPanel.jTextArea.select(start, end);
+                    start = 0;
+                    end = 0;
+                }
+                else                                                //找到了
+                {
+                    MainPanel.jTextArea.requestFocus();     //请求此Component获取输入焦点
+                    MainPanel.jTextArea.select(start, end);
+                }
+            }
+        });
+    }
+}
+�
+H:\����\��������\javaʵ�ּ򵥵ĳɼ�����\\src\\main\\java\\UI\\UpdateStudent.java
+package UI;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+/**
+ * Project name(项目名称)：java实现简单的成绩管理
+ * Package(包名): UI
+ * Class(类名): UpdateStudent
+ * Author(作者）: mao
+ * Author QQ：1296193245
+ * GitHub：https://github.com/maomao124/
+ * Date(创建日期)： 2022/1/15
+ * Time(创建时间)： 16:10
+ * Version(版本): 1.0
+ * Description(描述)： 无
+ */
+
+public class UpdateStudent
+{
+    JDialog jDialog;
+    data.Student student;
+
+    public UpdateStudent(data.Student student)
+    {
+        this.student = student;
+
+        jDialog = new JDialog(MainPanel.jFrame, "更新学生信息");
+        int w = 300;
+        int h = 200;
+        int x = MainPanel.jFrame.getX();
+        int y = MainPanel.jFrame.getY();
+        //System.out.println(x+"  "+y);
+        int width = MainPanel.jFrame.getWidth();
+        int height = MainPanel.jFrame.getHeight();
+        int Location_x = x + width / 2 - w / 2;
+        int Location_y = y + height / 2 - h / 2;
+        jDialog.setLocation(Location_x, Location_y);
+        jDialog.setSize(w, h);
+
+        JLabel jLabel_no = new JLabel("请输入新的学生学号：");
+        JLabel jLabel_name = new JLabel("请输入新的学生姓名：");
+        JTextField JTextField_no = new JTextField();
+        JTextField_no.setText(String.valueOf(student.getNo()));
+        JTextField JTextField_name = new JTextField();
+        JTextField_name.setText(student.getName());
+        JButton jButton = new JButton("确定");
+        jButton.setBackground(Color.cyan);
+
+        JPanel jPanel = new JPanel();
+        JPanel jPanel_no = new JPanel();
+        JPanel jPanel_name = new JPanel();
+        jPanel.setLayout(new GridLayout(3, 1));
+        //jPanel_no.setLayout(new GridLayout(1, 2));
+        //jPanel_name.setLayout(new GridLayout(1, 2));
+        jPanel_no.setLayout(new BorderLayout());
+        jPanel_name.setLayout(new BorderLayout());
+
+        /*
+        jPanel_no.add(jLabel_no);
+        jPanel_no.add(JTextField_no);
+        jPanel_name.add(jLabel_name);
+        jPanel_name.add(JTextField_name);
+         */
+        jPanel_no.add(jLabel_no, BorderLayout.WEST);
+        jPanel_no.add(JTextField_no, BorderLayout.CENTER);
+        jPanel_name.add(jLabel_name, BorderLayout.WEST);
+        jPanel_name.add(JTextField_name, BorderLayout.CENTER);
+        jPanel.add(jPanel_no);
+        jPanel.add(jPanel_name);
+        jPanel.add(jButton);
+        jDialog.add(jPanel);
+
+        jDialog.setVisible(true);
+        //jDialog.dispose();
+
+        jButton.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                UpdateStudent.this.addStudent(JTextField_no, JTextField_name);
+            }
+        });
+    }
+
+    private void addStudent(JTextField JTextField_no, JTextField JTextField_name)
+    {
+        long no = -1;
+        String name;
+        try
+        {
+            no = Long.parseLong(JTextField_no.getText());
+        }
+        catch (Exception e)
+        {
+            Toolkit.getDefaultToolkit().beep();
+            JOptionPane.showMessageDialog(null, "输入的学号不是long型！", "提示", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        name = JTextField_name.getText();
+
+        if (no == -1)
+        {
+            Toolkit.getDefaultToolkit().beep();
+            JOptionPane.showMessageDialog(null, "输入的学号为-1！", "提示", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (name == null)
+        {
+            Toolkit.getDefaultToolkit().beep();
+            JOptionPane.showMessageDialog(null, "姓名为空！", "提示", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (name.equals(""))
+        {
+            Toolkit.getDefaultToolkit().beep();
+            JOptionPane.showMessageDialog(null, "姓名为空！", "提示", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        boolean result = MainPanel.function.updateStudent(no, name, student.getNo());
+        if (!result)
+        {
+            Toolkit.getDefaultToolkit().beep();
+            JOptionPane.showMessageDialog(null, "更新失败！", "提示", JOptionPane.ERROR_MESSAGE);
+        }
+        else
+        {
+            MainPanel.jTextArea.setText(MainPanel.function.getStudentInformation());
+            io.Student.write();
+            jDialog.dispose();
+        }
+    }
+}
+�
+H:\����\��������\javaʵ�ּ򵥵ĳɼ�����\\src\\main\\java\\UI\\UpdateStudentScore.java
+package UI;
+
+import data.Student;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+/**
+ * Project name(项目名称)：java实现简单的成绩管理
+ * Package(包名): UI
+ * Class(类名): UpdateStudentScore
+ * Author(作者）: mao
+ * Author QQ：1296193245
+ * GitHub：https://github.com/maomao124/
+ * Date(创建日期)： 2022/1/15
+ * Time(创建时间)： 18:10
+ * Version(版本): 1.0
+ * Description(描述)： 无
+ */
+
+public class UpdateStudentScore
+{
+    JDialog jDialog;
+    data.Student student;
+
+    public UpdateStudentScore(Student student)
+    {
+        this.student = student;
+
+        jDialog = new JDialog(MainPanel.jFrame, "修改学生\"" + student.getName() + "\"的成绩");
+        int w = 300;
+        int h = 200;
+        int x = MainPanel.jFrame.getX();
+        int y = MainPanel.jFrame.getY();
+        //System.out.println(x+"  "+y);
+        int width = MainPanel.jFrame.getWidth();
+        int height = MainPanel.jFrame.getHeight();
+        int Location_x = x + width / 2 - w / 2;
+        int Location_y = y + height / 2 - h / 2;
+        jDialog.setLocation(Location_x, Location_y);
+        jDialog.setSize(w, h);
+
+        JLabel jLabel_subject = new JLabel("请输入科目：");
+        JLabel jLabel_score = new JLabel("请输入分数：");
+        JTextField JTextField_subject = new JTextField();
+        JTextField JTextField_score = new JTextField();
+        JButton jButton = new JButton("确定");
+        jButton.setBackground(Color.cyan);
+
+        JPanel jPanel = new JPanel();
+        JPanel jPanel_no = new JPanel();
+        JPanel jPanel_name = new JPanel();
+        jPanel.setLayout(new GridLayout(3, 1));
+        //jPanel_no.setLayout(new GridLayout(1, 2));
+        //jPanel_name.setLayout(new GridLayout(1, 2));
+        jPanel_no.setLayout(new BorderLayout());
+        jPanel_name.setLayout(new BorderLayout());
+
+        /*
+        jPanel_no.add(jLabel_no);
+        jPanel_no.add(JTextField_no);
+        jPanel_name.add(jLabel_name);
+        jPanel_name.add(JTextField_name);
+         */
+        jPanel_no.add(jLabel_subject, BorderLayout.WEST);
+        jPanel_no.add(JTextField_subject, BorderLayout.CENTER);
+        jPanel_name.add(jLabel_score, BorderLayout.WEST);
+        jPanel_name.add(JTextField_score, BorderLayout.CENTER);
+        jPanel.add(jPanel_no);
+        jPanel.add(jPanel_name);
+        jPanel.add(jButton);
+        jDialog.add(jPanel);
+
+        jDialog.setVisible(true);
+        //jDialog.dispose();
+
+        jButton.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                UpdateStudentScore.this.update(JTextField_subject, JTextField_score);
+            }
+        });
+    }
+
+    private void update(JTextField JTextField_subject, JTextField JTextField_score)
+    {
+        String subject;
+        float score;
+        try
+        {
+            score = Float.parseFloat(JTextField_score.getText());
+        }
+        catch (Exception e)
+        {
+            Toolkit.getDefaultToolkit().beep();
+            JOptionPane.showMessageDialog(null, "输入的分数不是float型！", "提示", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        subject = JTextField_subject.getText();
+        if (score < 0)
+        {
+            Toolkit.getDefaultToolkit().beep();
+            JOptionPane.showMessageDialog(null, "输入的分数不能为负数！", "提示", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        boolean result = MainPanel.function.updateStudentScore(student.getNo(), subject, score);
+        if (!result)
+        {
+            Toolkit.getDefaultToolkit().beep();
+            JOptionPane.showMessageDialog(null, "成绩修改失败！", "提示", JOptionPane.ERROR_MESSAGE);
+        }
+        else
+        {
+            JTextField_subject.setText("");
+            JTextField_score.setText("");
+            MainPanel.jTextArea.setText(MainPanel.function.getStudentInformation());
+            io.Student.write();
+        }
+    }
+}
+�
