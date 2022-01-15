@@ -77,6 +77,7 @@ public class MainPanel
         jPanel_up1.add(globalFind);
 
         jPanel_up2.add(addStudentScore);
+        jPanel_up2.add(updateStudentScore);
 
         jPanel_up.add(jPanel_up1);
         jPanel_up.add(jPanel_up2);
@@ -177,6 +178,15 @@ public class MainPanel
                 MainPanel.this.addStudentScore();
             }
         });
+
+        updateStudentScore.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                MainPanel.this.updateStudentScore();
+            }
+        });
     }
 
     /**
@@ -192,6 +202,7 @@ public class MainPanel
         findByName = new JButton("按姓名查找");
         globalFind = new JButton("全局查找");
         addStudentScore = new JButton("添加成绩");
+        updateStudentScore = new JButton("修改成绩");
 
         display.setBackground(Color.cyan);
         addStudent.setBackground(Color.cyan);
@@ -201,6 +212,7 @@ public class MainPanel
         findByName.setBackground(Color.cyan);
         globalFind.setBackground(Color.cyan);
         addStudentScore.setBackground(Color.cyan);
+        updateStudentScore.setBackground(Color.cyan);
     }
 
     /**
@@ -417,5 +429,49 @@ public class MainPanel
             return;
         }
         new AddStudentScore(student);
+    }
+
+    /**
+     * 修改成绩
+     */
+    private void updateStudentScore()
+    {
+        long no;
+        String no_str = JOptionPane.showInputDialog(null, "请输入要修改学生信息的学生学号：");
+        if (no_str == null)
+        {
+            return;
+        }
+        if (no_str.equals(""))
+        {
+            Toolkit.getDefaultToolkit().beep();
+            JOptionPane.showMessageDialog(null, "学号不能为空!", "提示", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        try
+        {
+            no = Long.parseLong(no_str);
+        }
+        catch (Exception e)
+        {
+            Toolkit.getDefaultToolkit().beep();
+            JOptionPane.showMessageDialog(null, "输入的学号不是long型！", "提示", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (no < 0)
+        {
+            Toolkit.getDefaultToolkit().beep();
+            JOptionPane.showMessageDialog(null, "输入的学号不是正数！", "提示", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        data.Student student = function.findByNo(no);
+        if (student == null)
+        {
+            Toolkit.getDefaultToolkit().beep();
+            JOptionPane.showMessageDialog(null, "此学生不存在！", "提示", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        new UpdateStudentScore(student);
     }
 }
