@@ -69,6 +69,7 @@ public class MainPanel
         jPanel_up.add(deleteStudent);
         jPanel_up.add(updateStudent);
         jPanel_up.add(findByNo);
+        jPanel_up.add(findByName);
 
         jPanel_main.add(jScrollPane, BorderLayout.CENTER);
         jPanel_main.add(jPanel_up, BorderLayout.NORTH);
@@ -139,6 +140,15 @@ public class MainPanel
                 MainPanel.this.findByNo();
             }
         });
+
+        findByName.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                MainPanel.this.findByName();
+            }
+        });
     }
 
     /**
@@ -151,12 +161,14 @@ public class MainPanel
         deleteStudent = new JButton("删除");
         updateStudent = new JButton("更新");
         findByNo = new JButton("按学号查找");
+        findByName = new JButton("按姓名查找");
 
         display.setBackground(Color.cyan);
         addStudent.setBackground(Color.cyan);
         deleteStudent.setBackground(Color.cyan);
         updateStudent.setBackground(Color.cyan);
         findByNo.setBackground(Color.cyan);
+        findByName.setBackground(Color.cyan);
     }
 
     /**
@@ -300,6 +312,35 @@ public class MainPanel
             return;
         }
         JOptionPane.showMessageDialog(null,
-                "学生信息为：\n" + student + "\n", "查找结果", 0);
+                "学生信息为：\n" + student + "\n", "查找结果", JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    private void findByName()
+    {
+        String name_str = JOptionPane.showInputDialog(null, "请输入要查找的姓名：");
+        if (name_str == null)
+        {
+            return;
+        }
+        if (name_str.equals(""))
+        {
+            Toolkit.getDefaultToolkit().beep();
+            JOptionPane.showMessageDialog(null, "姓名不能为空!", "提示", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        String result=function.getFindByName(name_str);
+        if (result==null)
+        {
+            Toolkit.getDefaultToolkit().beep();
+            JOptionPane.showMessageDialog(null, "查找结果为空!", "提示", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        if (result.equals(""))
+        {
+            Toolkit.getDefaultToolkit().beep();
+            JOptionPane.showMessageDialog(null, "查找结果为空!", "提示", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        jTextArea.setText(function.getFindByName(name_str));
     }
 }
