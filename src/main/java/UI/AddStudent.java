@@ -85,6 +85,12 @@ public class AddStudent
     {
         long no = -1;
         String name;
+        if (JTextField_no.getText().equals(""))
+        {
+            Toolkit.getDefaultToolkit().beep();
+            JOptionPane.showMessageDialog(null, "输入的学号不能为空！", "提示", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         try
         {
             no = Long.parseLong(JTextField_no.getText());
@@ -101,6 +107,12 @@ public class AddStudent
         {
             Toolkit.getDefaultToolkit().beep();
             JOptionPane.showMessageDialog(null, "输入的学号为-1！", "提示", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (no < 0)
+        {
+            Toolkit.getDefaultToolkit().beep();
+            JOptionPane.showMessageDialog(null, "输入的学号不能为负数！", "提示", JOptionPane.ERROR_MESSAGE);
             return;
         }
         if (name == null)

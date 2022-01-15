@@ -62,6 +62,7 @@ public class MainPanel
 
         Font font = new Font("宋体", Font.BOLD, 20);
         jTextArea = new JTextArea();
+        jTextArea.setEditable(false);
         jTextArea.setFont(font);
         JScrollPane jScrollPane = new JScrollPane(jTextArea);       //加入滚动面板
 
@@ -78,6 +79,7 @@ public class MainPanel
 
         jPanel_up2.add(addStudentScore);
         jPanel_up2.add(updateStudentScore);
+        jPanel_up2.add(removeStudentScore);
 
         jPanel_up.add(jPanel_up1);
         jPanel_up.add(jPanel_up2);
@@ -187,6 +189,15 @@ public class MainPanel
                 MainPanel.this.updateStudentScore();
             }
         });
+
+        removeStudentScore.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                new RemoveStudentScore();
+            }
+        });
     }
 
     /**
@@ -203,6 +214,7 @@ public class MainPanel
         globalFind = new JButton("全局查找");
         addStudentScore = new JButton("添加成绩");
         updateStudentScore = new JButton("修改成绩");
+        removeStudentScore = new JButton("删除成绩");
 
         display.setBackground(Color.cyan);
         addStudent.setBackground(Color.cyan);
@@ -213,6 +225,7 @@ public class MainPanel
         globalFind.setBackground(Color.cyan);
         addStudentScore.setBackground(Color.cyan);
         updateStudentScore.setBackground(Color.cyan);
+        removeStudentScore.setBackground(Color.cyan);
     }
 
     /**

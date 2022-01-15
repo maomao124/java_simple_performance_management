@@ -8,27 +8,24 @@ import java.awt.event.ActionListener;
 /**
  * Project name(项目名称)：java实现简单的成绩管理
  * Package(包名): UI
- * Class(类名): UpdateStudent
+ * Class(类名): RemoveStudentScore
  * Author(作者）: mao
  * Author QQ：1296193245
  * GitHub：https://github.com/maomao124/
  * Date(创建日期)： 2022/1/15
- * Time(创建时间)： 16:10
+ * Time(创建时间)： 18:50
  * Version(版本): 1.0
  * Description(描述)： 无
  */
 
-public class UpdateStudent
+public class RemoveStudentScore
 {
     JDialog jDialog;
-    data.Student student;
 
-    public UpdateStudent(data.Student student)
+    public RemoveStudentScore()
     {
-        this.student = student;
-
-        jDialog = new JDialog(MainPanel.jFrame, "更新学生信息");
-        int w = 300;
+        jDialog = new JDialog(MainPanel.jFrame, "删除学生成绩");
+        int w = 350;
         int h = 200;
         int x = MainPanel.jFrame.getX();
         int y = MainPanel.jFrame.getY();
@@ -40,23 +37,21 @@ public class UpdateStudent
         jDialog.setLocation(Location_x, Location_y);
         jDialog.setSize(w, h);
 
-        JLabel jLabel_no = new JLabel("请输入新的学生学号：");
-        JLabel jLabel_name = new JLabel("请输入新的学生姓名：");
+        JLabel jLabel_no = new JLabel("------------请输入学生学号：");
+        JLabel jLabel_subject = new JLabel("请输入要删除的学生成绩：");
         JTextField JTextField_no = new JTextField();
-        JTextField_no.setText(String.valueOf(student.getNo()));
-        JTextField JTextField_name = new JTextField();
-        JTextField_name.setText(student.getName());
+        JTextField JTextField_subject = new JTextField();
         JButton jButton = new JButton("确定");
         jButton.setBackground(Color.cyan);
 
         JPanel jPanel = new JPanel();
         JPanel jPanel_no = new JPanel();
-        JPanel jPanel_name = new JPanel();
+        JPanel jPanel_subject = new JPanel();
         jPanel.setLayout(new GridLayout(3, 1));
         //jPanel_no.setLayout(new GridLayout(1, 2));
         //jPanel_name.setLayout(new GridLayout(1, 2));
         jPanel_no.setLayout(new BorderLayout());
-        jPanel_name.setLayout(new BorderLayout());
+        jPanel_subject.setLayout(new BorderLayout());
 
         /*
         jPanel_no.add(jLabel_no);
@@ -66,10 +61,10 @@ public class UpdateStudent
          */
         jPanel_no.add(jLabel_no, BorderLayout.WEST);
         jPanel_no.add(JTextField_no, BorderLayout.CENTER);
-        jPanel_name.add(jLabel_name, BorderLayout.WEST);
-        jPanel_name.add(JTextField_name, BorderLayout.CENTER);
+        jPanel_subject.add(jLabel_subject, BorderLayout.WEST);
+        jPanel_subject.add(JTextField_subject, BorderLayout.CENTER);
         jPanel.add(jPanel_no);
-        jPanel.add(jPanel_name);
+        jPanel.add(jPanel_subject);
         jPanel.add(jButton);
         jDialog.add(jPanel);
 
@@ -81,15 +76,15 @@ public class UpdateStudent
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                UpdateStudent.this.addStudent(JTextField_no, JTextField_name);
+                RemoveStudentScore.this.remove(JTextField_no, JTextField_subject);
             }
         });
     }
 
-    private void addStudent(JTextField JTextField_no, JTextField JTextField_name)
+    private void remove(JTextField JTextField_no, JTextField JTextField_subject)
     {
         long no = -1;
-        String name;
+        String subject;
         if (JTextField_no.getText().equals(""))
         {
             Toolkit.getDefaultToolkit().beep();
@@ -106,7 +101,7 @@ public class UpdateStudent
             JOptionPane.showMessageDialog(null, "输入的学号不是long型！", "提示", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        name = JTextField_name.getText();
+        subject = JTextField_subject.getText();
 
         if (no == -1)
         {
@@ -114,29 +109,23 @@ public class UpdateStudent
             JOptionPane.showMessageDialog(null, "输入的学号为-1！", "提示", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        if (name == null)
+        if (no<0)
         {
             Toolkit.getDefaultToolkit().beep();
-            JOptionPane.showMessageDialog(null, "姓名为空！", "提示", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "输入的学号不能为负数！", "提示", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        if (name.equals(""))
+        if (subject == null)
         {
             Toolkit.getDefaultToolkit().beep();
-            JOptionPane.showMessageDialog(null, "姓名为空！", "提示", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "科目信息为空！", "提示", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        boolean result = MainPanel.function.updateStudent(no, name, student.getNo());
-        if (!result)
+        if (subject.equals(""))
         {
             Toolkit.getDefaultToolkit().beep();
-            JOptionPane.showMessageDialog(null, "更新失败！", "提示", JOptionPane.ERROR_MESSAGE);
-        }
-        else
-        {
-            MainPanel.jTextArea.setText(MainPanel.function.getStudentInformation());
-            io.Student.write();
-            jDialog.dispose();
+            JOptionPane.showMessageDialog(null, "科目信息为空！", "提示", JOptionPane.ERROR_MESSAGE);
+            return;
         }
     }
 }
