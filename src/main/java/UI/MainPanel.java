@@ -41,22 +41,28 @@ public class MainPanel
     private JButton AverageScore;
     private JButton subject_score;
 
+    @SuppressWarnings("all")
     private FontSetting fontSetting_object = null;
+    @SuppressWarnings("all")
     private Border border_object = null;
+    @SuppressWarnings("all")
     private InstructionsForUse instructionsForUse_object = null;
+    @SuppressWarnings("all")
     private About about_object = null;
 
-    private JMenuBar jMenuBar;   //菜单栏
-    private JMenu menu;
-    private JMenuItem fontSetting;
-    private JMenuItem borderSetting;
-    private JMenuItem use;
-    private JMenuItem about;
+    @SuppressWarnings("all")
+    private final JMenuBar jMenuBar;   //菜单栏
+    @SuppressWarnings("all")
+    private final JMenu menu;
+    private final JMenuItem fontSetting;
+    private final JMenuItem borderSetting;
+    private final JMenuItem use;
+    private final JMenuItem about;
 
 
     public MainPanel()
     {
-        jFrame = new JFrame("成绩管理");                //初始化顶层面板
+        jFrame = new JFrame("成绩管理系统");                //初始化顶层面板
         jFrame.setSize(1280, 720);
         int screenWidth = Toolkit.getDefaultToolkit().getScreenSize().width;       //获取屏幕宽度
         int screenHeight = Toolkit.getDefaultToolkit().getScreenSize().height;     //获取屏幕高度
@@ -140,6 +146,7 @@ public class MainPanel
     /**
      * 初始化监听器
      */
+    @SuppressWarnings("all")
     private void initListener()
     {
         jFrame.addWindowListener(new WindowAdapter()

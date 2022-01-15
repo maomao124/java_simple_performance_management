@@ -18,6 +18,7 @@ import java.awt.*;
  * Description(描述)： 字体设置
  */
 
+@SuppressWarnings("all")
 public class FontSetting extends JFrame
 {
     private JTextArea textArea;

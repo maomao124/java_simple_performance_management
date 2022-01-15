@@ -352,6 +352,7 @@ public class Function implements Function_interface
      * @param subject     科目
      * @param asc_or_desc 升序或者降序
      */
+    @SuppressWarnings("all")
     @Override
     public void subject_score(String subject, String asc_or_desc)
     {
@@ -483,6 +484,7 @@ public class Function implements Function_interface
      * @return 字符串
      */
     @Override
+    @SuppressWarnings("all")
     public String getSubject_score(String subject, String asc_or_desc)
     {
         String str = null;

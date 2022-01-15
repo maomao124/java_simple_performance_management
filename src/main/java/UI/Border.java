@@ -19,6 +19,7 @@ import java.awt.*;
  * Description(描述)：  边框设置的界面
  */
 
+@SuppressWarnings("all")
 public class Border extends JFrame
 {
     private JTextArea textArea;
