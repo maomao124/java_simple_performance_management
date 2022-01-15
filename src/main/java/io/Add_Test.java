@@ -83,17 +83,17 @@ public class Add_Test
                 "包诸左石崔吉钮龚程嵇邢滑裴陆荣翁荀羊於惠，甄曲家封芮羿储靳汲邴糜松井段富巫乌焦巴弓牧隗山谷车侯宓蓬全郗班仰秋仲伊宫宁仇栾暴甘钭厉戎";
 
         String[] subject = {"语文", "数学", "英语", "化学", "物理", "生物", "政治", "历史", "地理"};
-        System.out.println(lastName.length);
-        System.out.println(name_str.length());
+        //System.out.println(lastName.length);
+        //System.out.println(name_str.length());
         {
             String name = String.valueOf(lastName[getIntRandom(0, lastName.length - 1)]);
             String name1 = String.valueOf(name_str.charAt(getIntRandom(0, name_str.length() - 1)));
             String name2 = String.valueOf(name_str.charAt(getIntRandom(0, name_str.length() - 1)));
-            System.out.print(name);
-            System.out.print(name1);
-            System.out.println(name2);
+            //System.out.print(name);
+            //System.out.print(name1);
+            //System.out.println(name2);
             String final_name = name + name1 + name2;
-            System.out.println(final_name);
+            //System.out.println(final_name);
         }
 
         for (long i = 0; i < 1000; i++)
@@ -126,6 +126,9 @@ public class Add_Test
         }
         //System.out.println(data.student_arraylist.getList());
         io.Student.write();
+        System.out.println();
+        System.out.println("测试数据已经添加完成!");
+        System.out.println();
         System.out.println();
 
 
