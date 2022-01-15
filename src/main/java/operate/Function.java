@@ -128,10 +128,21 @@ public class Function implements Function_interface
         }
     }
 
+    /**
+     * 获得学生的所有信息，返回字符串，不在控制台上打印
+     *
+     * @return String
+     */
     @Override
     public String getStudentInformation()
     {
-        return null;
+        StringBuilder stringBuilder = new StringBuilder();
+        for (int i = 0; i < student_arraylist.getList().size(); i++)
+        {
+            data.Student student = data.student_arraylist.getList().get(i);
+            stringBuilder.append(student).append("\n");
+        }
+        return stringBuilder.toString();
     }
 
     /**
@@ -174,10 +185,25 @@ public class Function implements Function_interface
         }
     }
 
+    /**
+     * 获得查找学生信息的结果，按姓名查找，返回字符串，不在控制台上打印
+     *
+     * @param name 学生姓名
+     * @return 字符串
+     */
     @Override
     public String getFindByName(String name)
     {
-        return null;
+        StringBuilder stringBuilder = new StringBuilder();
+        for (int i = 0; i < student_arraylist.getList().size(); i++)
+        {
+            data.Student student = data.student_arraylist.getList().get(i);
+            if (student.getName().equals(name))            //找到相等的姓名
+            {
+                stringBuilder.append(student).append("\n");
+            }
+        }
+        return stringBuilder.toString();
     }
 
     /**
@@ -426,18 +452,156 @@ public class Function implements Function_interface
         {
             Toolkit.getDefaultToolkit().beep();
             System.out.println("排序方式只能为升序或者降序");
+            return;
         }
         //开始遍历
         System.out.println("科目：" + subject + "    排序方式：" + str);
+        float sumScore = 0;
+        float AverageScore = 0;
+
         for (Student student : list)
         {
-            System.out.println(student.getNo() + "\t\t" + student.getName() + "\t\t" + student.getMap().get(subject));
+            float number = student.getMap().get(subject);
+            System.out.println(student.getNo() + "\t\t" + student.getName() + "\t\t" + number);
+            sumScore = sumScore + number;
         }
+        AverageScore = sumScore / list.size();
+        System.out.println();
+        System.out.println("总数：" + list.size() + "    科目平均分：" + AverageScore);
     }
 
+    /**
+     * 获得某门科目的成绩，并且按升序或者降序排列，返回字符串,不在控制台上打印
+     *
+     * @param subject     科目
+     * @param asc_or_desc 升序或者降序
+     * @return 字符串
+     */
     @Override
-    public void getSubject_score(String subject, String asc_or_desc)
+    public String getSubject_score(String subject, String asc_or_desc)
     {
+        String str = null;
+        StringBuilder stringBuilder = new StringBuilder();
+        ArrayList<Student> list = new ArrayList<>();
+        //键为学生对象，值为分数
+        for (int i = 0; i < student_arraylist.getList().size(); i++)
+        {
+            data.Student student = data.student_arraylist.getList().get(i);
+            if (student.getMap().containsKey(subject))      //集合存在对应的科目
+            {
+                list.add(student);
+            }
+        }
+        if (list.size() == 0)     //空
+        {
+            Toolkit.getDefaultToolkit().beep();
+            stringBuilder.append("科目").append(subject).append("无对应的数据\n");
+            return stringBuilder.toString();
+        }
+        //排序
+        if (asc_or_desc.equals("asc") || asc_or_desc.equals("ASC"))       //升序
+        {
+            str = "升序";
+            /*
+            list.sort((stu1, stu2) ->
+            {
+                if (stu1.getMap().get(subject) > stu2.getMap().get(subject))
+                {
+                    return 1;
+                }
+                else if (stu1.getMap().get(subject) < stu2.getMap().get(subject))
+                {
+                    return -1;
+                }
+                else
+                {
+                    return 0;
+                }
+            });
+             */
+            list.sort(new Comparator<>()
+            {
+                @Override
+                public int compare(Student stu1, Student stu2)
+                {
+                    if (stu1.getMap().get(subject) > stu2.getMap().get(subject))
+                    {
+                        return 1;
+                    }
+                    else if (stu1.getMap().get(subject) < stu2.getMap().get(subject))
+                    {
+                        return -1;
+                    }
+                    else
+                    {
+                        return 0;
+                    }
+                }
+            });
+        }
+        else if (asc_or_desc.equals("desc") || asc_or_desc.equals("DESC"))       //降序
+        {
+            str = "降序";
+            list.sort((stu1, stu2) ->
+            {
+                if (stu1.getMap().get(subject) > stu2.getMap().get(subject))
+                {
+                    return -1;
+                }
+                else if (stu1.getMap().get(subject) < stu2.getMap().get(subject))
+                {
+                    return 1;
+                }
+                else
+                {
+                    return 0;
+                }
+            });
+            /*
+            list.sort(new Comparator<Student>()
+            {
+                @Override
+                public int compare(Student stu1, Student stu2)
+                {
+                    if (stu1.getMap().get(subject) > stu2.getMap().get(subject))
+                    {
+                        return -1;
+                    }
+                    else if (stu1.getMap().get(subject) < stu2.getMap().get(subject))
+                    {
+                        return 1;
+                    }
+                    else
+                    {
+                        return 0;
+                    }
+                }
+            });
+             */
+        }
+        else
+        {
+            Toolkit.getDefaultToolkit().beep();
+            stringBuilder.append("排序方式只能为升序或者降序\n");
+            return null;
+        }
+        //开始遍历
+        stringBuilder.append("科目：").append(subject).append("    排序方式：").append(str);
+        stringBuilder.append("\n");
+        float sumScore = 0;
+        float AverageScore = 0;
 
+        for (Student student : list)
+        {
+            float number = student.getMap().get(subject);
+            stringBuilder.append(student.getNo()).append("\t\t").append(student.getName()).append("\t\t").append(number);
+            stringBuilder.append("\n");
+            sumScore = sumScore + number;
+        }
+        AverageScore = sumScore / list.size();
+        stringBuilder.append("\n");
+        stringBuilder.append("总数：").append(list.size()).append("    科目平均分：").append(AverageScore);
+        stringBuilder.append("\n");
+        return stringBuilder.toString();
     }
 }

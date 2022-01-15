@@ -67,5 +67,5 @@ public interface Function_interface
     public void subject_score(String subject, String asc_or_desc);
 
     //获得某门科目的成绩，并且按升序或者降序排列，返回字符串,不在控制台上打印
-    public void getSubject_score(String subject, String asc_or_desc);
+    public String getSubject_score(String subject, String asc_or_desc);
 }
