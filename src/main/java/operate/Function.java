@@ -129,6 +129,46 @@ public class Function implements Function_interface
     }
 
     /**
+     * 查找学生信息，按学号查找
+     *
+     * @param no 学号
+     * @return data.Student对象
+     */
+    @Override
+    public Student findByNo(long no)
+    {
+        Student student = null;
+        for (int i = 0; i < student_arraylist.getList().size(); i++)
+        {
+            data.Student student1 = data.student_arraylist.getList().get(i);
+            if (student1.getNo() == no)            //找到相等的学号
+            {
+                student = student1;
+                break;
+            }
+        }
+        return student;
+    }
+
+    /**
+     * 查找学生信息，按姓名查找
+     *
+     * @param name 学生姓名
+     */
+    @Override
+    public void findByName(String name)
+    {
+        for (int i = 0; i < student_arraylist.getList().size(); i++)
+        {
+            data.Student student = data.student_arraylist.getList().get(i);
+            if (student.getName().equals(name))            //找到相等的姓名
+            {
+                System.out.println(student);
+            }
+        }
+    }
+
+    /**
      * 添加一名学生的成绩信息，如果键已经存在，则更新成绩
      *
      * @param no      学号

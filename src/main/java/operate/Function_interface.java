@@ -1,5 +1,7 @@
 package operate;
 
+import data.Student;
+
 /**
  * Project name(项目名称)：java实现简单的成绩管理
  * Package(包名): operate
@@ -33,6 +35,12 @@ public interface Function_interface
 
     //查看学生的所有信息
     public void display();
+
+    //查找学生信息，按学号查找
+    public Student findByNo(long no);
+
+    //查找学生信息，按姓名查找
+    public void findByName(String name);
 
     //添加一名学生的成绩信息，如果键已经存在，则更新成绩
     public boolean addStudentScore(long no, String subject, float score);
