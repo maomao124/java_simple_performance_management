@@ -84,8 +84,39 @@ public class AddStudentScore
         });
     }
 
-    private void add(JTextField JTextField_no, JTextField JTextField_score)
+    private void add(JTextField JTextField_subject, JTextField JTextField_score)
     {
-
+        String subject;
+        float score;
+        try
+        {
+            score = Float.parseFloat(JTextField_score.getText());
+        }
+        catch (Exception e)
+        {
+            Toolkit.getDefaultToolkit().beep();
+            JOptionPane.showMessageDialog(null, "输入的分数不是float型！", "提示", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        subject = JTextField_subject.getText();
+        if (score < 0)
+        {
+            Toolkit.getDefaultToolkit().beep();
+            JOptionPane.showMessageDialog(null, "输入的分数不能为负数！", "提示", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        boolean result = MainPanel.function.addStudentScore(student.getNo(), subject, score);
+        if (!result)
+        {
+            Toolkit.getDefaultToolkit().beep();
+            JOptionPane.showMessageDialog(null, "成绩添加失败！", "提示", JOptionPane.ERROR_MESSAGE);
+        }
+        else
+        {
+            JTextField_subject.setText("");
+            JTextField_score.setText("");
+            MainPanel.jTextArea.setText(MainPanel.function.getStudentInformation());
+            io.Student.write();
+        }
     }
 }
