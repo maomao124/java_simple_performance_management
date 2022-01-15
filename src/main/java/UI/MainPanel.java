@@ -80,6 +80,9 @@ public class MainPanel
         jPanel_up2.add(addStudentScore);
         jPanel_up2.add(updateStudentScore);
         jPanel_up2.add(removeStudentScore);
+        jPanel_up2.add(removeAllStudentScore);
+        jPanel_up2.add(AverageScore);
+        jPanel_up2.add(subject_score);
 
         jPanel_up.add(jPanel_up1);
         jPanel_up.add(jPanel_up2);
@@ -198,6 +201,33 @@ public class MainPanel
                 new RemoveStudentScore();
             }
         });
+
+        removeAllStudentScore.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                MainPanel.this.removeAll();
+            }
+        });
+
+        AverageScore.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                MainPanel.this.AverageScore();
+            }
+        });
+
+        subject_score.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+
+            }
+        });
     }
 
     /**
@@ -215,10 +245,12 @@ public class MainPanel
         addStudentScore = new JButton("添加成绩");
         updateStudentScore = new JButton("修改成绩");
         removeStudentScore = new JButton("删除成绩");
+        removeAllStudentScore = new JButton("删除全部成绩");
+        AverageScore = new JButton("查看平均分");
 
         display.setBackground(Color.cyan);
         addStudent.setBackground(Color.cyan);
-        deleteStudent.setBackground(Color.cyan);
+        deleteStudent.setBackground(Color.yellow);
         updateStudent.setBackground(Color.cyan);
         findByNo.setBackground(Color.cyan);
         findByName.setBackground(Color.cyan);
@@ -226,6 +258,8 @@ public class MainPanel
         addStudentScore.setBackground(Color.cyan);
         updateStudentScore.setBackground(Color.cyan);
         removeStudentScore.setBackground(Color.cyan);
+        removeAllStudentScore.setBackground(Color.yellow);
+        AverageScore.setBackground(Color.cyan);
     }
 
     /**
@@ -486,5 +520,101 @@ public class MainPanel
         }
 
         new UpdateStudentScore(student);
+    }
+
+    private void removeAll()
+    {
+        long no;
+        String no_str = JOptionPane.showInputDialog(null, "请输入要删除全部成绩的学号：");
+        if (no_str == null)
+        {
+            return;
+        }
+        if (no_str.equals(""))
+        {
+            Toolkit.getDefaultToolkit().beep();
+            JOptionPane.showMessageDialog(null, "学号不能为空!", "提示", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        try
+        {
+            no = Long.parseLong(no_str);
+        }
+        catch (Exception e)
+        {
+            Toolkit.getDefaultToolkit().beep();
+            JOptionPane.showMessageDialog(null, "输入的学号不是long型！", "提示", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (no < 0)
+        {
+            Toolkit.getDefaultToolkit().beep();
+            JOptionPane.showMessageDialog(null, "输入的学号不是正数！", "提示", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        data.Student student = function.findByNo(no);
+        if (student == null)
+        {
+            Toolkit.getDefaultToolkit().beep();
+            JOptionPane.showMessageDialog(null, "此学生不存在！", "提示", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        Toolkit.getDefaultToolkit().beep();
+        int result = JOptionPane.showConfirmDialog(null,
+                "学生信息为：\n" + student + "\n是否删除此学生的全部成绩？", "提示", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+        if (result == 0)
+        {
+            boolean result1 = function.removeAllStudentScore(no);
+            if (!result1)
+            {
+                Toolkit.getDefaultToolkit().beep();
+                JOptionPane.showMessageDialog(null, "成绩删除失败！", "提示", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            MainPanel.jTextArea.setText(MainPanel.function.getStudentInformation());
+            io.Student.write();
+        }
+    }
+
+    private void AverageScore()
+    {
+        long no;
+        String no_str = JOptionPane.showInputDialog(null, "请输入学号：");
+        if (no_str == null)
+        {
+            return;
+        }
+        if (no_str.equals(""))
+        {
+            Toolkit.getDefaultToolkit().beep();
+            JOptionPane.showMessageDialog(null, "学号不能为空!", "提示", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        try
+        {
+            no = Long.parseLong(no_str);
+        }
+        catch (Exception e)
+        {
+            Toolkit.getDefaultToolkit().beep();
+            JOptionPane.showMessageDialog(null, "输入的学号不是long型！", "提示", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (no < 0)
+        {
+            Toolkit.getDefaultToolkit().beep();
+            JOptionPane.showMessageDialog(null, "输入的学号不是正数！", "提示", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        data.Student student = function.findByNo(no);
+        if (student == null)
+        {
+            Toolkit.getDefaultToolkit().beep();
+            JOptionPane.showMessageDialog(null, "此学生不存在！", "提示", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        float average = function.AverageScore(no);
+        JOptionPane.showMessageDialog(null, "学号：" + no + ",姓名："
+                + student.getName() + " 的平均分为：" + average, "提示", JOptionPane.INFORMATION_MESSAGE);
     }
 }

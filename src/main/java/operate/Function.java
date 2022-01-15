@@ -307,6 +307,7 @@ public class Function implements Function_interface
             if (student.getNo() == no)            //找到相等的学号
             {
                 student.getMap().clear();       //清空成绩
+                return true;
             }
         }
         //没找到该学号
@@ -332,6 +333,10 @@ public class Function implements Function_interface
                 for (String subject : student.getMap().keySet())
                 {
                     sum = sum + student.getMap().get(subject);
+                }
+                if (student.getMap().size() == 0)                 //没有成绩，直接返回
+                {
+                    return 0;
                 }
                 result = sum / student.getMap().size();
                 return result;
