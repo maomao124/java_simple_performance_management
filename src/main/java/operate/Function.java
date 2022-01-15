@@ -593,6 +593,7 @@ public class Function implements Function_interface
         //开始遍历
         stringBuilder.append("科目：").append(subject).append("    排序方式：").append(str);
         stringBuilder.append("\n");
+        stringBuilder.append("\n");
         float sumScore = 0;
         float AverageScore = 0;
 
