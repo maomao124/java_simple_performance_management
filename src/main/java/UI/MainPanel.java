@@ -1,7 +1,11 @@
 package UI;
 
+import operate.Function;
+
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -20,7 +24,8 @@ import java.awt.event.WindowEvent;
 
 public class MainPanel
 {
-    JFrame jFrame;
+    static Function function = new Function();
+    static JFrame jFrame;
     private JTextArea jTextArea;                //文本域
     private JButton addStudent;
     private JButton deleteStudent;
@@ -56,12 +61,16 @@ public class MainPanel
         jTextArea.setFont(font);
         JScrollPane jScrollPane = new JScrollPane(jTextArea);       //加入滚动面板
 
+        this.initBottom();                              //初始化按钮
+        this.initListener();                            //初始化监听器
+
+        jPanel_down.add(display);
+        jPanel_up.add(addStudent);
+
         jPanel_main.add(jScrollPane, BorderLayout.CENTER);
         jPanel_main.add(jPanel_up, BorderLayout.NORTH);
         jPanel_main.add(jPanel_down, BorderLayout.SOUTH);
         jFrame.add(jPanel_main);
-
-        this.initListener();                            //初始化监听器
 
         jFrame.setVisible(true);
 
@@ -80,5 +89,36 @@ public class MainPanel
                 System.exit(1);
             }
         });
+
+        display.addActionListener(new ActionListener()
+        {
+
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                jTextArea.setText(function.getStudentInformation());
+            }
+        });
+
+        addStudent.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                new AddStudent();
+            }
+        });
+    }
+
+    /**
+     * 初始化按钮
+     */
+    private void initBottom()
+    {
+        display = new JButton("刷新");
+        addStudent = new JButton("添加");
+
+        display.setBackground(Color.cyan);
+        addStudent.setBackground(Color.cyan);
     }
 }

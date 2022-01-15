@@ -25,6 +25,7 @@ public class Run
     {
         try
         {
+            data.student_arraylist.setList(io.Student.read());  //读
             new MainPanel();
         }
         catch (Exception e)

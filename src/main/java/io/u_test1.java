@@ -26,7 +26,9 @@ public class u_test1
         {
             System.out.println(student);
         }
-        Function function=new Function();
-        function.subject_score("语文","desc");
+        Function function = new Function();
+        function.subject_score("语文", "desc");
+
+        System.out.println(function.getStudentInformation());
     }
 }
