@@ -23,7 +23,11 @@ public class Student
 {
     private static final String path = "Student.dat";       //用于存放数据的文件路径
 
-    //把所有学生的信息写入到硬盘里
+    /**
+     * 把所有学生的信息写入到硬盘里
+     *
+     * @return boolean
+     */
     public static boolean write()
     {
         boolean result = false;
@@ -89,6 +93,11 @@ public class Student
         return result;
     }
 
+    /**
+     * 读取
+     *
+     * @return ArrayList<data.Student>对象
+     */
     public static ArrayList<data.Student> read()
     {
         ArrayList<data.Student> list = new ArrayList<>();
