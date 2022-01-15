@@ -225,7 +225,7 @@ public class MainPanel
             @Override
             public void actionPerformed(ActionEvent e)
             {
-
+                new Subject_score();
             }
         });
     }
@@ -247,6 +247,7 @@ public class MainPanel
         removeStudentScore = new JButton("删除成绩");
         removeAllStudentScore = new JButton("删除全部成绩");
         AverageScore = new JButton("查看平均分");
+        subject_score = new JButton("查询某科目成绩");
 
         display.setBackground(Color.cyan);
         addStudent.setBackground(Color.cyan);
@@ -260,6 +261,7 @@ public class MainPanel
         removeStudentScore.setBackground(Color.cyan);
         removeAllStudentScore.setBackground(Color.yellow);
         AverageScore.setBackground(Color.cyan);
+        subject_score.setBackground(Color.cyan);
     }
 
     /**
