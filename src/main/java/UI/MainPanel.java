@@ -54,8 +54,11 @@ public class MainPanel
 
         JPanel jPanel_main = new JPanel();
         JPanel jPanel_up = new JPanel();
+        JPanel jPanel_up1 = new JPanel();
+        JPanel jPanel_up2 = new JPanel();
         JPanel jPanel_down = new JPanel();
         jPanel_main.setLayout(new BorderLayout());          //构造一个新的边框布局，组件之间没有间隙
+        jPanel_up.setLayout(new GridLayout(2, 1));
 
         Font font = new Font("宋体", Font.BOLD, 20);
         jTextArea = new JTextArea();
@@ -66,12 +69,17 @@ public class MainPanel
         this.initListener();                            //初始化监听器
 
         jPanel_down.add(display);
-        jPanel_up.add(addStudent);
-        jPanel_up.add(deleteStudent);
-        jPanel_up.add(updateStudent);
-        jPanel_up.add(findByNo);
-        jPanel_up.add(findByName);
-        jPanel_up.add(globalFind);
+        jPanel_up1.add(addStudent);
+        jPanel_up1.add(deleteStudent);
+        jPanel_up1.add(updateStudent);
+        jPanel_up1.add(findByNo);
+        jPanel_up1.add(findByName);
+        jPanel_up1.add(globalFind);
+
+        jPanel_up2.add(addStudentScore);
+
+        jPanel_up.add(jPanel_up1);
+        jPanel_up.add(jPanel_up2);
 
         jPanel_main.add(jScrollPane, BorderLayout.CENTER);
         jPanel_main.add(jPanel_up, BorderLayout.NORTH);
@@ -160,6 +168,15 @@ public class MainPanel
                 new Search();
             }
         });
+
+        addStudentScore.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+
+            }
+        });
     }
 
     /**
@@ -174,6 +191,7 @@ public class MainPanel
         findByNo = new JButton("按学号查找");
         findByName = new JButton("按姓名查找");
         globalFind = new JButton("全局查找");
+        addStudentScore = new JButton("添加成绩");
 
         display.setBackground(Color.cyan);
         addStudent.setBackground(Color.cyan);
@@ -182,6 +200,7 @@ public class MainPanel
         findByNo.setBackground(Color.cyan);
         findByName.setBackground(Color.cyan);
         globalFind.setBackground(Color.cyan);
+        addStudentScore.setBackground(Color.cyan);
     }
 
     /**
