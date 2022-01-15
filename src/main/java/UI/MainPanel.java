@@ -416,6 +416,6 @@ public class MainPanel
             JOptionPane.showMessageDialog(null, "此学生不存在！", "提示", JOptionPane.ERROR_MESSAGE);
             return;
         }
-
+        new AddStudentScore(student);
     }
 }
