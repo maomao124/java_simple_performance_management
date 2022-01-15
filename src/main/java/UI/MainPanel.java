@@ -174,7 +174,7 @@ public class MainPanel
             @Override
             public void actionPerformed(ActionEvent e)
             {
-
+                MainPanel.this.addStudentScore();
             }
         });
     }
@@ -374,5 +374,48 @@ public class MainPanel
             return;
         }
         jTextArea.setText(function.getFindByName(name_str));
+    }
+
+    /**
+     * 添加学生成绩信息
+     */
+    private void addStudentScore()
+    {
+        long no;
+        String no_str = JOptionPane.showInputDialog(null, "请输入要添加学生信息的学生学号：");
+        if (no_str == null)
+        {
+            return;
+        }
+        if (no_str.equals(""))
+        {
+            Toolkit.getDefaultToolkit().beep();
+            JOptionPane.showMessageDialog(null, "学号不能为空!", "提示", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        try
+        {
+            no = Long.parseLong(no_str);
+        }
+        catch (Exception e)
+        {
+            Toolkit.getDefaultToolkit().beep();
+            JOptionPane.showMessageDialog(null, "输入的学号不是long型！", "提示", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (no < 0)
+        {
+            Toolkit.getDefaultToolkit().beep();
+            JOptionPane.showMessageDialog(null, "输入的学号不是正数！", "提示", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        data.Student student = function.findByNo(no);
+        if (student == null)
+        {
+            Toolkit.getDefaultToolkit().beep();
+            JOptionPane.showMessageDialog(null, "此学生不存在！", "提示", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
     }
 }
