@@ -41,6 +41,18 @@ public class MainPanel
     private JButton AverageScore;
     private JButton subject_score;
 
+    private FontSetting fontSetting_object = null;
+    private Border border_object = null;
+    private InstructionsForUse instructionsForUse_object = null;
+    private About about_object = null;
+
+    private JMenuBar jMenuBar;   //菜单栏
+    private JMenu menu;
+    private JMenuItem fontSetting;
+    private JMenuItem borderSetting;
+    private JMenuItem use;
+    private JMenuItem about;
+
 
     public MainPanel()
     {
@@ -68,6 +80,26 @@ public class MainPanel
 
         this.initBottom();                              //初始化按钮
         this.initListener();                            //初始化监听器
+
+        fontSetting_object = new FontSetting(jTextArea);
+        border_object = new Border(jTextArea, jScrollPane);
+        instructionsForUse_object = new InstructionsForUse();
+        about_object = new About();
+
+        jMenuBar = new JMenuBar();
+        menu = new JMenu("操作");
+
+        fontSetting = new JMenuItem("字体设置");
+        borderSetting = new JMenuItem("边框设置");
+        use = new JMenuItem("使用说明");
+        about = new JMenuItem("关于");
+
+        fontSetting.setBackground(Color.cyan);
+        borderSetting.setBackground(Color.cyan);
+        use.setBackground(Color.cyan);
+        about.setBackground(Color.cyan);
+
+
 
         jPanel_down.add(display);
         jPanel_up1.add(addStudent);
