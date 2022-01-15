@@ -26,7 +26,7 @@ public class MainPanel
 {
     static Function function = new Function();
     static JFrame jFrame;
-    private JTextArea jTextArea;                //文本域
+    static JTextArea jTextArea;                //文本域
     private JButton addStudent;
     private JButton deleteStudent;
     private JButton updateStudent;
@@ -74,6 +74,7 @@ public class MainPanel
 
         jFrame.setVisible(true);
 
+        jTextArea.setText(function.getStudentInformation());
     }
 
     /**

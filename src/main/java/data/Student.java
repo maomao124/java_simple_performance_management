@@ -135,7 +135,7 @@ public class Student implements Serializable  //实现序列化接口
     public String toString()
     {
         final StringBuilder stringbuilder = new StringBuilder();
-        stringbuilder.append("学号：").append(no).append('\t');
+        stringbuilder.append("学号：").append(no).append("      ");
         stringbuilder.append("姓名：").append(name).append('\n');
         stringbuilder.append("分数：").append(map).append('\n');
         return stringbuilder.toString();

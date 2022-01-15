@@ -2,6 +2,8 @@ package UI;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * Project name(项目名称)：java实现简单的成绩管理
@@ -18,9 +20,11 @@ import java.awt.*;
 
 public class AddStudent
 {
+    JDialog jDialog;
+
     public AddStudent()
     {
-        JDialog jDialog = new JDialog(MainPanel.jFrame, "添加学生");
+        jDialog = new JDialog(MainPanel.jFrame, "添加学生");
         int w = 300;
         int h = 200;
         int x = MainPanel.jFrame.getX();
@@ -44,16 +48,84 @@ public class AddStudent
         JPanel jPanel_no = new JPanel();
         JPanel jPanel_name = new JPanel();
         jPanel.setLayout(new GridLayout(3, 1));
-        jPanel_no.setLayout(new GridLayout(1, 2));
-        jPanel_name.setLayout(new GridLayout(1, 2));
+        //jPanel_no.setLayout(new GridLayout(1, 2));
+        //jPanel_name.setLayout(new GridLayout(1, 2));
+        jPanel_no.setLayout(new BorderLayout());
+        jPanel_name.setLayout(new BorderLayout());
 
+        /*
         jPanel_no.add(jLabel_no);
         jPanel_no.add(JTextField_no);
         jPanel_name.add(jLabel_name);
         jPanel_name.add(JTextField_name);
-
+         */
+        jPanel_no.add(jLabel_no, BorderLayout.WEST);
+        jPanel_no.add(JTextField_no, BorderLayout.CENTER);
+        jPanel_name.add(jLabel_name, BorderLayout.WEST);
+        jPanel_name.add(JTextField_name, BorderLayout.CENTER);
+        jPanel.add(jPanel_no);
+        jPanel.add(jPanel_name);
+        jPanel.add(jButton);
+        jDialog.add(jPanel);
 
         jDialog.setVisible(true);
         //jDialog.dispose();
+
+        jButton.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                AddStudent.this.addStudent(JTextField_no, JTextField_name);
+            }
+        });
+    }
+
+    private void addStudent(JTextField JTextField_no, JTextField JTextField_name)
+    {
+        long no = -1;
+        String name;
+        try
+        {
+            no = Long.parseLong(JTextField_no.getText());
+        }
+        catch (Exception e)
+        {
+            Toolkit.getDefaultToolkit().beep();
+            JOptionPane.showMessageDialog(null, "输入的学号不是long型！", "提示", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        name = JTextField_name.getText();
+
+        if (no == -1)
+        {
+            Toolkit.getDefaultToolkit().beep();
+            JOptionPane.showMessageDialog(null, "输入的学号为-1！", "提示", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (name == null)
+        {
+            Toolkit.getDefaultToolkit().beep();
+            JOptionPane.showMessageDialog(null, "姓名为空！", "提示", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (name.equals(""))
+        {
+            Toolkit.getDefaultToolkit().beep();
+            JOptionPane.showMessageDialog(null, "姓名为空！", "提示", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        boolean result = MainPanel.function.addStudent(no, name);
+        if (!result)
+        {
+            Toolkit.getDefaultToolkit().beep();
+            JOptionPane.showMessageDialog(null, "插入失败！", "提示", JOptionPane.ERROR_MESSAGE);
+        }
+        else
+        {
+            MainPanel.jTextArea.setText(MainPanel.function.getStudentInformation());
+            io.Student.write();
+            jDialog.dispose();
+        }
     }
 }
